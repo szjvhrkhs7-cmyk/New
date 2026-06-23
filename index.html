@@ -8,17 +8,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Задачи">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%2337352f'/%3E%3Ctext x='256' y='290' text-anchor='middle' font-family='Inter,-apple-system,system-ui,sans-serif' font-weight='600' font-size='320' fill='white'%3E§%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='512' y2='512' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%234338CA'/%3E%3Cstop offset='1' stop-color='%237C3AED'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='80' fill='url(%23g)'/%3E%3Ccircle cx='256' cy='260' r='145' fill='%23ffffff' opacity='.12'/%3E%3Cpolyline points='168,266 232,335 350,195' fill='none' stroke='%23fff' stroke-width='46' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%20%D1%8E%D1%80%D0%B8%D1%81%D1%82%D0%B0%22%2C%22short_name%22%3A%22%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%23ffffff%22%7D">
 <title>Задачи юриста</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
-  font-family:-apple-system,'Inter',BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Roboto',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:#ffffff;color:#37352f;
   -webkit-font-smoothing:antialiased;
   -webkit-tap-highlight-color:transparent;
@@ -209,7 +209,9 @@ input[type="date"].form-input{-webkit-appearance:none;appearance:none;min-height
 .editor-toolbar{
   display:flex;gap:6px;padding:8px 10px;background:#f7f7f5;
   border:1px solid #e3e2de;border-radius:8px 8px 0 0;border-bottom:none;
+  align-items:center;
 }
+.editor-sep{width:1px;height:20px;background:#e3e2de;flex-shrink:0}
 .editor-btn{
   padding:6px 12px;border-radius:4px;font-size:14px;font-weight:600;
   color:#37352f;background:transparent;border:1px solid transparent;
@@ -335,6 +337,9 @@ input[type="date"].form-input{-webkit-appearance:none;appearance:none;min-height
     </div>
     <input class="note-editor-title" id="noteEditorTitle" placeholder="Заголовок">
     <div class="editor-toolbar">
+      <button class="editor-btn" onclick="execNoteCmd('undo')" title="Отменить">↩</button>
+      <button class="editor-btn" onclick="execNoteCmd('redo')" title="Повторить">↪</button>
+      <div class="editor-sep"></div>
       <button class="editor-btn" id="noteEdBold" onclick="execNoteCmd('bold')"><b>B</b></button>
       <button class="editor-btn" id="noteEdList" onclick="execNoteCmd('list')">• Список</button>
     </div>
@@ -400,6 +405,9 @@ input[type="date"].form-input{-webkit-appearance:none;appearance:none;min-height
   <div class="form-group">
     <label class="form-label">Заметки</label>
     <div class="editor-toolbar">
+      <button class="editor-btn" onclick="execTaskCmd('undo')" title="Отменить">↩</button>
+      <button class="editor-btn" onclick="execTaskCmd('redo')" title="Повторить">↪</button>
+      <div class="editor-sep"></div>
       <button class="editor-btn" id="taskEdBold" onclick="execTaskCmd('bold')"><b>B</b></button>
       <button class="editor-btn" id="taskEdList" onclick="execTaskCmd('list')">• Список</button>
     </div>
@@ -1104,17 +1112,13 @@ function confirmDeleteNote(id) {
 }
 
 // Editor commands
-function execTaskCmd(cmd) {
-  document.getElementById('taskNotes').focus();
-  if (cmd === 'bold') document.execCommand('bold', false, null);
-  else if (cmd === 'list') document.execCommand('insertUnorderedList', false, null);
+function execCmd(elId, cmd) {
+  document.getElementById(elId).focus();
+  var ec = cmd === 'list' ? 'insertUnorderedList' : cmd;
+  document.execCommand(ec, false, null);
 }
-
-function execNoteCmd(cmd) {
-  document.getElementById('noteEditorBody').focus();
-  if (cmd === 'bold') document.execCommand('bold', false, null);
-  else if (cmd === 'list') document.execCommand('insertUnorderedList', false, null);
-}
+function execTaskCmd(cmd) { execCmd('taskNotes', cmd); }
+function execNoteCmd(cmd) { execCmd('noteEditorBody', cmd); }
 
 // Modal management
 function showModal(id) {
@@ -1302,19 +1306,31 @@ document.addEventListener('keydown', function(e) {
 });
 
 // App icon (apple-touch-icon needs PNG via Canvas)
-document.fonts.load('600 320px Inter').then(function(){
+(function(){
   var s=512,c=document.createElement('canvas');c.width=s;c.height=s;
   var g=c.getContext('2d');
-  g.fillStyle='#37352f';g.fillRect(0,0,s,s);
-  g.fillStyle='#fff';
-  g.font='600 320px Inter,-apple-system,system-ui,sans-serif';
-  g.textAlign='center';g.textBaseline='middle';
-  g.fillText('§',256,275);
+  var bg=g.createLinearGradient(0,0,s,s);
+  bg.addColorStop(0,'#4338CA');bg.addColorStop(1,'#7C3AED');
+  g.fillStyle=bg;g.fillRect(0,0,s,s);
+  var hl=g.createRadialGradient(160,120,0,256,256,380);
+  hl.addColorStop(0,'rgba(255,255,255,0.14)');hl.addColorStop(1,'rgba(255,255,255,0)');
+  g.fillStyle=hl;g.fillRect(0,0,s,s);
+  g.beginPath();g.arc(256,260,145,0,Math.PI*2);
+  var gl=g.createLinearGradient(256,115,256,405);
+  gl.addColorStop(0,'rgba(255,255,255,0.22)');gl.addColorStop(1,'rgba(255,255,255,0.04)');
+  g.fillStyle=gl;g.fill();
+  g.strokeStyle='rgba(255,255,255,0.2)';g.lineWidth=2;g.stroke();
+  g.save();g.shadowColor='rgba(0,0,0,0.25)';g.shadowBlur=14;g.shadowOffsetY=6;
+  var ck=g.createLinearGradient(168,335,350,195);
+  ck.addColorStop(0,'#fff');ck.addColorStop(0.6,'#fff');ck.addColorStop(1,'#FDE68A');
+  g.strokeStyle=ck;g.lineWidth=46;g.lineCap='round';g.lineJoin='round';
+  g.beginPath();g.moveTo(168,266);g.lineTo(232,335);g.lineTo(350,195);g.stroke();
+  g.restore();
   var u=c.toDataURL('image/png');
   var a=document.createElement('link');
   a.rel='apple-touch-icon';a.href=u;
   document.head.appendChild(a);
-});
+})();
 
 // Init
 renderTasks();
