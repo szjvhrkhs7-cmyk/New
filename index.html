@@ -200,7 +200,9 @@ button{touch-action:manipulation;cursor:pointer;border:none;background:none}
   background-repeat:no-repeat;background-position:right 14px center;
 }
 .form-row{display:flex;gap:10px}
-.form-row .form-group{flex:1}
+.form-row .form-group{flex:1;min-width:0;overflow:hidden}
+.form-row .form-input,.form-row .form-select{min-width:0;width:100%;box-sizing:border-box}
+input[type="date"].form-input{-webkit-appearance:none;appearance:none;min-height:44px}
 
 .editor-toolbar{
   display:flex;gap:6px;padding:8px 10px;background:#f7f7f5;
@@ -359,13 +361,13 @@ button{touch-action:manipulation;cursor:pointer;border:none;background:none}
   <div class="form-row">
     <div class="form-group">
       <label class="form-label">Дата ответа</label>
-      <input class="form-input" id="taskDueDate" type="date">
+      <input class="form-input" id="taskDueDate" type="date" style="display:block">
     </div>
     <div class="form-group">
       <label class="form-label">Напоминание</label>
       <select class="form-select" id="taskReminder">
-        <option value="">Без напоминания</option>
-        <option value="0">В день события</option>
+        <option value="">Нет</option>
+        <option value="0">В день</option>
         <option value="1">За 1 день</option>
         <option value="2">За 2 дня</option>
         <option value="3">За 3 дня</option>
