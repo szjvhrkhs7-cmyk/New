@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'unsafe-inline'; img-src data: blob:;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Задачи">
+<meta name="theme-color" content="#ffffff">
+<title>Задачи юриста</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:-apple-system,'Inter',BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:#ffffff;color:#37352f;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
+  padding-bottom:calc(70px + env(safe-area-inset-bottom));
+  min-height:100vh;
+  overflow-x:hidden;
+}
+input,textarea,select,button,[contenteditable]{font-size:16px;font-family:inherit}
+button{touch-action:manipulation;cursor:pointer;border:none;background:none}
+
+.header{
+  background:#fff;border-bottom:1px solid #e3e2de;
+  padding:calc(12px + env(safe-area-inset-top)) 16px 0;
+  position:sticky;top:0;z-index:100;
+}
+.header-title{font-size:20px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.header-back{font-size:16px;color:#2383e2;font-weight:500;padding:4px 0}
+.header-stats{font-size:13px;color:#787774;margin-bottom:10px}
+
+.tabs{display:flex;border-bottom:none;gap:0}
+.tab{
+  flex:1;text-align:center;padding:10px 0 12px;font-size:14px;font-weight:500;
+  color:#787774;position:relative;transition:color .2s;
+}
+.tab.active{color:#37352f}
+.tab.active::after{
+  content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;
+  background:#37352f;border-radius:1px;
+}
+.tab-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:9px;
+  background:#e8f0fe;color:#2383e2;font-size:11px;font-weight:600;
+  margin-left:4px;vertical-align:middle;
+}
+
+.search-bar{
+  padding:12px 16px 8px;position:sticky;top:0;z-index:50;background:#fff;
+}
+.search-input{
+  width:100%;padding:10px 14px;border:1px solid #e3e2de;border-radius:8px;
+  font-size:16px;background:#f7f7f5;color:#37352f;outline:none;
+  transition:border-color .2s;
+}
+.search-input:focus{border-color:#2383e2}
+.search-input::placeholder{color:#b4b4b0}
+
+.filter-bar{display:flex;gap:6px;padding:4px 16px 8px;overflow-x:auto;flex-wrap:nowrap}
+.filter-chip{
+  padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;
+  background:#f7f7f5;color:#787774;white-space:nowrap;border:1px solid #e3e2de;
+  transition:all .2s;flex-shrink:0;
+}
+.filter-chip.active{background:#e8f0fe;color:#2383e2;border-color:#2383e2}
+
+.content{padding:0 16px 16px}
+.empty-state{text-align:center;padding:48px 16px;color:#b4b4b0;font-size:15px}
+
+.task-card{
+  background:#fff;border:1px solid #e3e2de;border-radius:8px;
+  padding:14px 14px 14px 18px;margin-bottom:10px;position:relative;
+  overflow:hidden;transition:opacity .2s;
+}
+.task-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+}
+.task-card.priority-high::before{background:#eb5757}
+.task-card.priority-medium::before{background:#d9730d}
+.task-card.priority-normal::before{background:#2383e2}
+.task-card.priority-low::before{background:#b4b4b0}
+.task-card.overdue::before{background:#eb5757}
+.task-card.status-done{opacity:.7}
+.task-card.status-done::before{background:#4daa57}
+
+.task-title{font-size:15px;font-weight:600;line-height:1.4;margin-bottom:4px;word-break:break-word}
+.task-extra{font-size:13px;color:#787774;line-height:1.4;margin-bottom:8px;word-break:break-word}
+.task-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.badge{
+  display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;
+  font-size:12px;font-weight:500;
+}
+.badge-status-new{background:#e8f0fe;color:#2383e2}
+.badge-status-inwork{background:#fadec9;color:#d9730d}
+.badge-status-waiting{background:#f3e8ff;color:#9333ea}
+.badge-status-done{background:#dbeddb;color:#4daa57}
+.badge-priority-high{background:#fbe4e4;color:#eb5757}
+.badge-priority-medium{background:#fadec9;color:#d9730d}
+.badge-priority-normal{background:#e8f0fe;color:#2383e2}
+.badge-priority-low{background:#f7f7f5;color:#b4b4b0}
+.task-date{font-size:12px;color:#787774}
+.task-date.overdue{color:#eb5757;font-weight:600}
+.task-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.task-action-btn{
+  padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;
+  border:1px solid #e3e2de;color:#37352f;background:#f7f7f5;
+  transition:background .2s;
+}
+.task-action-btn:active{background:#e3e2de}
+.task-action-btn.btn-done{color:#4daa57;border-color:#4daa57}
+.task-action-btn.btn-delete{color:#eb5757;border-color:#eb5757}
+
+.completed-toggle{
+  padding:14px 0;font-size:14px;font-weight:500;color:#787774;
+  display:flex;align-items:center;gap:6px;
+}
+.completed-toggle .arrow{transition:transform .3s;display:inline-block}
+.completed-toggle .arrow.open{transform:rotate(90deg)}
+.completed-list{overflow:hidden;transition:max-height .3s ease;max-height:0}
+.completed-list.open{max-height:9999px}
+
+.toolbar-actions{display:flex;gap:8px;padding:8px 16px;flex-wrap:wrap}
+.toolbar-btn{
+  padding:8px 14px;border-radius:6px;font-size:13px;font-weight:500;
+  background:#f7f7f5;border:1px solid #e3e2de;color:#37352f;
+}
+.toolbar-btn:active{background:#e3e2de}
+
+.project-card{
+  background:#fff;border:1px solid #e3e2de;border-radius:8px;
+  padding:16px;margin-bottom:10px;transition:background .2s;
+}
+.project-card:active{background:#f7f7f5}
+.project-name{font-size:16px;font-weight:600;margin-bottom:4px}
+.project-desc{font-size:13px;color:#787774;margin-bottom:8px}
+.project-count{font-size:12px;color:#b4b4b0}
+.project-actions{display:flex;gap:8px;margin-top:10px}
+
+.note-card{
+  background:#fff;border:1px solid #e3e2de;border-radius:8px;
+  padding:16px;margin-bottom:10px;transition:background .2s;
+}
+.note-card:active{background:#f7f7f5}
+.note-title{font-size:15px;font-weight:600;margin-bottom:4px}
+.note-preview{font-size:13px;color:#787774;line-height:1.4;margin-bottom:6px;
+  overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.note-date{font-size:12px;color:#b4b4b0}
+
+.fab{
+  position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));right:20px;
+  width:48px;height:48px;border-radius:50%;background:#2383e2;color:#fff;
+  font-size:24px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(35,131,226,.4);z-index:90;
+  transition:transform .2s,opacity .2s;
+}
+.fab:active{transform:scale(.9)}
+
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.overlay.active{opacity:1;pointer-events:auto}
+
+.modal{
+  position:fixed;bottom:0;left:0;right:0;z-index:201;
+  background:#fff;border-radius:12px 12px 0 0;
+  max-height:90vh;overflow-y:auto;overscroll-behavior:contain;
+  transform:translateY(100%);transition:transform .3s ease;
+  padding:0 20px calc(20px + env(safe-area-inset-bottom));
+}
+.modal.active{transform:translateY(0)}
+.modal-handle{
+  width:36px;height:4px;background:#e3e2de;border-radius:2px;
+  margin:10px auto 16px;
+}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:16px}
+
+.form-group{margin-bottom:14px}
+.form-label{font-size:13px;font-weight:600;color:#787774;margin-bottom:6px;display:block}
+.form-input{
+  width:100%;padding:10px 14px;border:1px solid #e3e2de;border-radius:8px;
+  font-size:16px;background:#f7f7f5;color:#37352f;outline:none;
+  transition:border-color .2s;resize:none;
+}
+.form-input:focus{border-color:#2383e2}
+.form-input::placeholder{color:#b4b4b0}
+.form-select{
+  width:100%;padding:10px 14px;border:1px solid #e3e2de;border-radius:8px;
+  font-size:16px;background:#f7f7f5;color:#37352f;outline:none;
+  -webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23787774' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+}
+.form-row{display:flex;gap:10px}
+.form-row .form-group{flex:1}
+
+.editor-toolbar{
+  display:flex;gap:6px;padding:8px 10px;background:#f7f7f5;
+  border:1px solid #e3e2de;border-radius:8px 8px 0 0;border-bottom:none;
+}
+.editor-btn{
+  padding:6px 12px;border-radius:4px;font-size:14px;font-weight:600;
+  color:#37352f;background:transparent;border:1px solid transparent;
+  transition:background .2s;
+}
+.editor-btn:active,.editor-btn.active{background:#e3e2de}
+.editor-area{
+  min-height:100px;padding:12px 14px;border:1px solid #e3e2de;
+  border-radius:0 0 8px 8px;font-size:16px;line-height:1.5;
+  color:#37352f;outline:none;overflow-y:auto;word-break:break-word;
+}
+.editor-area:empty::before{
+  content:attr(data-placeholder);color:#b4b4b0;pointer-events:none;
+}
+.editor-area ul{margin-left:20px;padding:0}
+.editor-area li{margin-bottom:2px}
+
+.btn-row{display:flex;gap:10px;margin-top:16px}
+.btn{
+  flex:1;padding:12px;border-radius:6px;font-size:16px;font-weight:600;
+  text-align:center;transition:opacity .2s;
+}
+.btn:active{opacity:.7}
+.btn-primary{background:#2383e2;color:#fff}
+.btn-secondary{background:#f7f7f5;color:#37352f;border:1px solid #e3e2de}
+.btn-danger{background:#fbe4e4;color:#eb5757}
+
+.note-editor-view{display:none;flex-direction:column;height:100%}
+.note-editor-view.active{display:flex}
+.note-editor-title{
+  width:100%;padding:12px 16px;font-size:20px;font-weight:700;
+  border:none;border-bottom:1px solid #e3e2de;outline:none;background:#fff;
+}
+.note-editor-body{
+  flex:1;padding:16px;font-size:16px;line-height:1.6;outline:none;
+  min-height:200px;overflow-y:auto;
+}
+.note-editor-body:empty::before{content:attr(data-placeholder);color:#b4b4b0;pointer-events:none}
+.note-editor-body ul{margin-left:20px}
+
+.cal-modal-content{padding:0}
+.cal-group{margin-bottom:14px}
+.cal-group label{font-size:13px;font-weight:600;color:#787774;display:block;margin-bottom:6px}
+
+.confirm-text{font-size:15px;line-height:1.5;margin-bottom:16px;color:#37352f}
+
+@media(max-width:380px){
+  .form-row{flex-direction:column;gap:0}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="header" id="mainHeader">
+    <div class="header-title" id="headerTitle">Задачи юриста</div>
+    <div class="header-stats" id="headerStats"></div>
+    <div class="tabs" id="mainTabs">
+      <div class="tab active" data-tab="tasks" onclick="switchTab('tasks')">Задачи <span class="tab-badge" id="badgeTasks">0</span></div>
+      <div class="tab" data-tab="projects" onclick="switchTab('projects')">Проекты <span class="tab-badge" id="badgeProjects">0</span></div>
+      <div class="tab" data-tab="notes" onclick="switchTab('notes')">Заметки <span class="tab-badge" id="badgeNotes">0</span></div>
+    </div>
+  </div>
+
+  <!-- Tasks Tab -->
+  <div id="tabTasks" class="tab-content">
+    <div class="search-bar">
+      <input class="search-input" id="taskSearch" type="search" placeholder="Поиск задач..." oninput="renderTasks()">
+    </div>
+    <div class="filter-bar" id="taskFilters">
+      <button class="filter-chip active" data-filter="active" onclick="setTaskFilter('active')">Все активные</button>
+      <button class="filter-chip" data-filter="new" onclick="setTaskFilter('new')">Новая</button>
+      <button class="filter-chip" data-filter="inwork" onclick="setTaskFilter('inwork')">В работе</button>
+      <button class="filter-chip" data-filter="waiting" onclick="setTaskFilter('waiting')">Ожидание</button>
+    </div>
+    <div class="content" id="taskList"></div>
+    <div class="toolbar-actions">
+      <button class="toolbar-btn" onclick="exportCSV()">Экспорт CSV</button>
+      <button class="toolbar-btn" onclick="backupJSON()">Резервная копия</button>
+      <button class="toolbar-btn" onclick="document.getElementById('restoreInput').click()">Восстановить</button>
+      <input type="file" id="restoreInput" accept=".json" style="display:none" onchange="restoreJSON(event)">
+    </div>
+  </div>
+
+  <!-- Projects Tab -->
+  <div id="tabProjects" class="tab-content" style="display:none">
+    <div class="search-bar">
+      <input class="search-input" id="projectSearch" type="search" placeholder="Поиск проектов..." oninput="renderProjects()">
+    </div>
+    <div class="content" id="projectList"></div>
+  </div>
+
+  <!-- Project Detail -->
+  <div id="tabProjectDetail" class="tab-content" style="display:none">
+    <div class="search-bar">
+      <input class="search-input" id="projectTaskSearch" type="search" placeholder="Поиск задач проекта..." oninput="renderProjectTasks()">
+    </div>
+    <div class="filter-bar" id="projectTaskFilters">
+      <button class="filter-chip active" data-filter="active" onclick="setProjectTaskFilter('active')">Все активные</button>
+      <button class="filter-chip" data-filter="new" onclick="setProjectTaskFilter('new')">Новая</button>
+      <button class="filter-chip" data-filter="inwork" onclick="setProjectTaskFilter('inwork')">В работе</button>
+      <button class="filter-chip" data-filter="waiting" onclick="setProjectTaskFilter('waiting')">Ожидание</button>
+    </div>
+    <div class="content" id="projectTaskList"></div>
+  </div>
+
+  <!-- Notes Tab -->
+  <div id="tabNotes" class="tab-content" style="display:none">
+    <div class="search-bar">
+      <input class="search-input" id="noteSearch" type="search" placeholder="Поиск заметок..." oninput="renderNotes()">
+    </div>
+    <div class="content" id="noteList"></div>
+  </div>
+
+  <!-- Note Editor -->
+  <div id="noteEditorView" class="note-editor-view">
+    <div style="padding:calc(12px + env(safe-area-inset-top)) 0 0;background:#fff;border-bottom:1px solid #e3e2de;">
+      <div style="display:flex;align-items:center;padding:0 16px 10px;gap:8px">
+        <button class="header-back" onclick="closeNoteEditor()">← Назад</button>
+        <div style="flex:1"></div>
+        <button class="header-back" onclick="saveCurrentNote()" style="color:#2383e2;font-weight:600">Сохранить</button>
+      </div>
+    </div>
+    <input class="note-editor-title" id="noteEditorTitle" placeholder="Заголовок">
+    <div class="editor-toolbar">
+      <button class="editor-btn" id="noteEdBold" onclick="execNoteCmd('bold')"><b>B</b></button>
+      <button class="editor-btn" id="noteEdList" onclick="execNoteCmd('list')">• Список</button>
+    </div>
+    <div class="note-editor-body" id="noteEditorBody" contenteditable="true" data-placeholder="Начните писать..."></div>
+  </div>
+</div>
+
+<button class="fab" id="fabBtn" onclick="onFabClick()">+</button>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="closeAllModals()"></div>
+
+<!-- Task Modal -->
+<div class="modal" id="taskModal">
+  <div class="modal-handle"></div>
+  <div class="modal-title" id="taskModalTitle">Новая задача</div>
+  <input type="hidden" id="taskEditId" value="">
+  <div class="form-group">
+    <label class="form-label">Краткая суть задачи *</label>
+    <textarea class="form-input" id="taskTitle" rows="2" placeholder="Опишите задачу"></textarea>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Что требуется дополнительно</label>
+    <textarea class="form-input" id="taskExtra" rows="2" placeholder="Дополнительная информация"></textarea>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Дата ответа</label>
+    <input class="form-input" id="taskDueDate" type="date">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Напоминание</label>
+    <select class="form-select" id="taskReminder">
+      <option value="">Без напоминания</option>
+      <option value="0">В день события</option>
+      <option value="1">За 1 день</option>
+      <option value="2">За 2 дня</option>
+      <option value="3">За 3 дня</option>
+      <option value="7">За неделю</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label">Значимость</label>
+      <select class="form-select" id="taskPriority">
+        <option value="normal">Обычная</option>
+        <option value="low">Низкая</option>
+        <option value="medium">Средняя</option>
+        <option value="high">Высокая</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Статус</label>
+      <select class="form-select" id="taskStatus">
+        <option value="new">Новая</option>
+        <option value="inwork">В работе</option>
+        <option value="waiting">Ожидание</option>
+        <option value="done">Завершена</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Заметки</label>
+    <div class="editor-toolbar">
+      <button class="editor-btn" id="taskEdBold" onclick="execTaskCmd('bold')"><b>B</b></button>
+      <button class="editor-btn" id="taskEdList" onclick="execTaskCmd('list')">• Список</button>
+    </div>
+    <div class="editor-area" id="taskNotes" contenteditable="true" data-placeholder="Заметки к задаче..."></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="closeAllModals()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveTask()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Project Modal -->
+<div class="modal" id="projectModal">
+  <div class="modal-handle"></div>
+  <div class="modal-title" id="projectModalTitle">Новый проект</div>
+  <input type="hidden" id="projectEditId" value="">
+  <div class="form-group">
+    <label class="form-label">Название *</label>
+    <input class="form-input" id="projectName" placeholder="Название проекта">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Описание</label>
+    <textarea class="form-input" id="projectDesc" rows="3" placeholder="Описание проекта"></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="closeAllModals()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveProject()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Calendar Modal -->
+<div class="modal" id="calModal">
+  <div class="modal-handle"></div>
+  <div class="modal-title">Добавить в календарь</div>
+  <input type="hidden" id="calTaskId" value="">
+  <div class="form-group">
+    <label class="form-label">Дата</label>
+    <input class="form-input" id="calDate" type="date">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Время</label>
+    <input class="form-input" id="calTime" type="time" value="10:00">
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="closeAllModals()">Отмена</button>
+    <button class="btn btn-primary" onclick="generateICS()">Скачать .ics</button>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal" id="confirmModal">
+  <div class="modal-handle"></div>
+  <div class="confirm-text" id="confirmText"></div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="closeAllModals()">Отмена</button>
+    <button class="btn btn-danger" id="confirmAction">Удалить</button>
+  </div>
+</div>
+
+<script>
+var VALID_STATUSES = ['new', 'inwork', 'waiting', 'done'];
+var VALID_PRIORITIES = ['low', 'normal', 'medium', 'high'];
+var PRIORITY_ORDER = {high: 0, medium: 1, normal: 2, low: 3};
+var STATUS_LABELS = {new: 'Новая', inwork: 'В работе', waiting: 'Ожидание', done: 'Завершена'};
+var PRIORITY_LABELS = {low: 'Низкая', normal: 'Обычная', medium: 'Средняя', high: 'Высокая'};
+
+var currentTab = 'tasks';
+var currentTaskFilter = 'active';
+var currentProjectId = null;
+var currentProjectTaskFilter = 'active';
+var currentNoteId = null;
+var completedVisible = false;
+var projectCompletedVisible = false;
+
+function loadData(key, def) {
+  try { var d = localStorage.getItem(key); return d ? JSON.parse(d) : def; }
+  catch(e) { return def; }
+}
+function saveData(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+
+var tasks = loadData('lawyerTasks', null);
+var projects = loadData('lawyerProjects', null);
+var projectTasks = loadData('lawyerProjectTasks', null);
+var notes = loadData('lawyerNotes', null);
+
+if (!tasks) {
+  var today = new Date().toISOString().slice(0, 10);
+  var d3 = new Date(); d3.setDate(d3.getDate() + 3);
+  var d7 = new Date(); d7.setDate(d7.getDate() + 7);
+  var dp = new Date(); dp.setDate(dp.getDate() - 1);
+  tasks = [
+    {id:1,title:'Подготовить исковое заявление по договору поставки',extra:'Ответчик: ООО "Ромашка", сумма 1.5 млн руб.',dueDate:d3.toISOString().slice(0,10),reminder:'1',priority:'high',status:'inwork',notes:'',createdAt:today},
+    {id:2,title:'Проверить договор аренды',extra:'Новый арендатор, помещение на 3 этаже',dueDate:d7.toISOString().slice(0,10),reminder:'3',priority:'medium',status:'new',notes:'',createdAt:today},
+    {id:3,title:'Ответ на претензию контрагента',extra:'',dueDate:dp.toISOString().slice(0,10),reminder:'0',priority:'high',status:'inwork',notes:'',createdAt:today},
+    {id:4,title:'Обновить шаблоны типовых договоров',extra:'Согласовать с отделом комплаенс',dueDate:'',reminder:'',priority:'low',status:'new',notes:'',createdAt:today}
+  ];
+  saveData('lawyerTasks', tasks);
+}
+if (!projects) {
+  projects = [{id:1,name:'Торговый оборот',desc:'Задачи связанные с торговым оборотом банка',createdAt:new Date().toISOString().slice(0,10)}];
+  saveData('lawyerProjects', projects);
+}
+if (!projectTasks) {
+  projectTasks = {};
+  saveData('lawyerProjectTasks', projectTasks);
+}
+if (!notes) {
+  notes = [];
+  saveData('lawyerNotes', notes);
+}
+
+function escapeHTML(str) {
+  var div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+function sanitizeHTML(html) {
+  var ALLOWED_TAGS = ['B','I','U','UL','OL','LI','BR','FONT','SPAN','P','DIV','STRONG','EM','S','H2','H3','H4','BLOCKQUOTE','HR','SUB','SUP'];
+  var temp = document.createElement('div');
+  temp.innerHTML = html || '';
+  function clean(node) {
+    var children = Array.prototype.slice.call(node.childNodes);
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      if (child.nodeType === 1) {
+        if (ALLOWED_TAGS.indexOf(child.tagName) === -1) {
+          while (child.firstChild) node.insertBefore(child.firstChild, child);
+          node.removeChild(child);
+        } else {
+          var attrs = Array.prototype.slice.call(child.attributes);
+          for (var j = 0; j < attrs.length; j++) {
+            var aname = attrs[j].name.toLowerCase();
+            if (aname.indexOf('on') === 0) {
+              child.removeAttribute(attrs[j].name);
+            } else if (aname === 'style') {
+              var sv = attrs[j].value.toLowerCase();
+              if (/expression|url\s*\(|import|behavior/.test(sv)) {
+                child.removeAttribute('style');
+              }
+            } else if (aname === 'href' || aname === 'src') {
+              var v = attrs[j].value.trim().toLowerCase();
+              if (v.indexOf('javascript:') === 0) child.removeAttribute(attrs[j].name);
+            }
+          }
+          clean(child);
+        }
+      }
+    }
+  }
+  clean(temp);
+  return temp.innerHTML;
+}
+
+function csvEscape(val) {
+  var s = String(val || '');
+  if (/^[=+\-@|]/.test(s)) s = "'" + s;
+  if (/[",\n\r]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+function nextId(arr) {
+  var max = 0;
+  for (var i = 0; i < arr.length; i++) { if (arr[i].id > max) max = arr[i].id; }
+  return max + 1;
+}
+
+function formatDate(ds) {
+  if (!ds) return '';
+  var parts = ds.split('-');
+  return parts[2] + '.' + parts[1] + '.' + parts[0];
+}
+
+function isOverdue(task) {
+  if (!task.dueDate || task.status === 'done') return false;
+  var today = new Date(); today.setHours(0,0,0,0);
+  var due = new Date(task.dueDate + 'T00:00:00');
+  return due < today;
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tabTasks').style.display = tab === 'tasks' ? '' : 'none';
+  document.getElementById('tabProjects').style.display = tab === 'projects' ? '' : 'none';
+  document.getElementById('tabProjectDetail').style.display = 'none';
+  document.getElementById('tabNotes').style.display = tab === 'notes' ? '' : 'none';
+  document.getElementById('noteEditorView').classList.remove('active');
+  document.getElementById('mainHeader').style.display = '';
+  document.getElementById('mainTabs').style.display = '';
+  currentProjectId = null;
+
+  var tabEls = document.querySelectorAll('.tab');
+  for (var i = 0; i < tabEls.length; i++) {
+    tabEls[i].classList.toggle('active', tabEls[i].getAttribute('data-tab') === tab);
+  }
+
+  document.getElementById('headerTitle').textContent = 'Задачи юриста';
+  document.getElementById('fabBtn').style.display = '';
+
+  if (tab === 'tasks') renderTasks();
+  else if (tab === 'projects') renderProjects();
+  else if (tab === 'notes') renderNotes();
+  updateBadges();
+}
+
+function updateBadges() {
+  var activeTasks = tasks.filter(function(t) { return t.status !== 'done'; });
+  document.getElementById('badgeTasks').textContent = activeTasks.length;
+  document.getElementById('badgeProjects').textContent = projects.length;
+  document.getElementById('badgeNotes').textContent = notes.length;
+
+  var inwork = tasks.filter(function(t) { return t.status === 'inwork'; }).length;
+  var overdue = tasks.filter(function(t) { return isOverdue(t); }).length;
+  var done = tasks.filter(function(t) { return t.status === 'done'; }).length;
+  document.getElementById('headerStats').textContent = inwork + ' в работе · ' + overdue + ' просрочено · ' + done + ' завершено';
+}
+
+function setTaskFilter(f) {
+  currentTaskFilter = f;
+  var chips = document.querySelectorAll('#taskFilters .filter-chip');
+  for (var i = 0; i < chips.length; i++) chips[i].classList.toggle('active', chips[i].getAttribute('data-filter') === f);
+  renderTasks();
+}
+
+function setProjectTaskFilter(f) {
+  currentProjectTaskFilter = f;
+  var chips = document.querySelectorAll('#projectTaskFilters .filter-chip');
+  for (var i = 0; i < chips.length; i++) chips[i].classList.toggle('active', chips[i].getAttribute('data-filter') === f);
+  renderProjectTasks();
+}
+
+function renderTaskCard(task, isProject) {
+  var od = isOverdue(task);
+  var cls = 'task-card priority-' + task.priority;
+  if (od) cls += ' overdue';
+  if (task.status === 'done') cls += ' status-done';
+
+  var html = '<div class="' + escapeHTML(cls) + '">';
+  html += '<div class="task-title">' + escapeHTML(task.title) + '</div>';
+  if (task.extra) html += '<div class="task-extra">' + escapeHTML(task.extra) + '</div>';
+  html += '<div class="task-meta">';
+  html += '<span class="badge badge-status-' + escapeHTML(task.status) + '">' + escapeHTML(STATUS_LABELS[task.status] || task.status) + '</span>';
+  html += '<span class="badge badge-priority-' + escapeHTML(task.priority) + '">' + escapeHTML(PRIORITY_LABELS[task.priority] || task.priority) + '</span>';
+  if (task.dueDate) {
+    html += '<span class="task-date' + (od ? ' overdue' : '') + '">' + escapeHTML(formatDate(task.dueDate)) + '</span>';
+  }
+  html += '</div>';
+  html += '<div class="task-actions">';
+  var prefix = isProject ? 'project' : 'main';
+  html += '<button class="task-action-btn" onclick="editTask(' + task.id + ",'" + prefix + "'" + ')">Изменить</button>';
+  if (task.status !== 'done') {
+    html += '<button class="task-action-btn btn-done" onclick="completeTask(' + task.id + ",'" + prefix + "'" + ')">Готово</button>';
+  }
+  html += '<button class="task-action-btn" onclick="openCalModal(' + task.id + ",'" + prefix + "'" + ')">Календарь</button>';
+  html += '<button class="task-action-btn btn-delete" onclick="confirmDeleteTask(' + task.id + ",'" + prefix + "'" + ')">Удалить</button>';
+  html += '</div></div>';
+  return html;
+}
+
+function filterAndSort(taskArr, query, filterStatus) {
+  var q = (query || '').toLowerCase().trim();
+  var active = [];
+  var done = [];
+  for (var i = 0; i < taskArr.length; i++) {
+    var t = taskArr[i];
+    if (q) {
+      var match = (t.title || '').toLowerCase().indexOf(q) !== -1 || (t.extra || '').toLowerCase().indexOf(q) !== -1;
+      if (!match) continue;
+    }
+    if (t.status === 'done') { done.push(t); continue; }
+    if (filterStatus === 'active' || t.status === filterStatus) active.push(t);
+  }
+  active.sort(function(a, b) {
+    var pa = PRIORITY_ORDER[a.priority] !== undefined ? PRIORITY_ORDER[a.priority] : 2;
+    var pb = PRIORITY_ORDER[b.priority] !== undefined ? PRIORITY_ORDER[b.priority] : 2;
+    if (pa !== pb) return pa - pb;
+    return b.id - a.id;
+  });
+  done.sort(function(a, b) { return b.id - a.id; });
+  return {active: active, done: done};
+}
+
+function renderTasks() {
+  var q = document.getElementById('taskSearch').value;
+  var result = filterAndSort(tasks, q, currentTaskFilter);
+  var container = document.getElementById('taskList');
+  var html = '';
+  if (result.active.length === 0 && result.done.length === 0) {
+    html = '<div class="empty-state">Нет задач</div>';
+  } else {
+    for (var i = 0; i < result.active.length; i++) html += renderTaskCard(result.active[i], false);
+    if (result.done.length > 0) {
+      html += '<div class="completed-toggle" onclick="toggleCompleted(false)">';
+      html += '<span class="arrow' + (completedVisible ? ' open' : '') + '">▸</span> Завершённые (' + result.done.length + ')';
+      html += '</div>';
+      html += '<div class="completed-list' + (completedVisible ? ' open' : '') + '" id="completedList">';
+      for (var j = 0; j < result.done.length; j++) html += renderTaskCard(result.done[j], false);
+      html += '</div>';
+    }
+  }
+  container.innerHTML = html;
+  updateBadges();
+}
+
+function toggleCompleted(isProject) {
+  if (isProject) {
+    projectCompletedVisible = !projectCompletedVisible;
+    renderProjectTasks();
+  } else {
+    completedVisible = !completedVisible;
+    renderTasks();
+  }
+}
+
+function getTaskList(prefix) {
+  if (prefix === 'project' && currentProjectId) {
+    if (!projectTasks[currentProjectId]) projectTasks[currentProjectId] = [];
+    return projectTasks[currentProjectId];
+  }
+  return tasks;
+}
+
+function saveTaskList(prefix) {
+  if (prefix === 'project') saveData('lawyerProjectTasks', projectTasks);
+  else saveData('lawyerTasks', tasks);
+}
+
+function onFabClick() {
+  if (currentTab === 'tasks') openTaskModal(null, 'main');
+  else if (currentTab === 'projects') {
+    if (currentProjectId) openTaskModal(null, 'project');
+    else openProjectModal(null);
+  }
+  else if (currentTab === 'notes') createNewNote();
+}
+
+function openTaskModal(task, prefix) {
+  document.getElementById('taskEditId').value = task ? task.id : '';
+  document.getElementById('taskEditId').setAttribute('data-prefix', prefix);
+  document.getElementById('taskModalTitle').textContent = task ? 'Редактирование задачи' : 'Новая задача';
+  document.getElementById('taskTitle').value = task ? task.title : '';
+  document.getElementById('taskExtra').value = task ? task.extra : '';
+  document.getElementById('taskDueDate').value = task ? task.dueDate || '' : '';
+  document.getElementById('taskReminder').value = task ? task.reminder || '' : '';
+  document.getElementById('taskPriority').value = task ? task.priority : 'normal';
+  document.getElementById('taskStatus').value = task ? task.status : 'new';
+  document.getElementById('taskNotes').innerHTML = task ? sanitizeHTML(task.notes) : '';
+  autoGrow(document.getElementById('taskTitle'));
+  autoGrow(document.getElementById('taskExtra'));
+  showModal('taskModal');
+}
+
+function saveTask() {
+  var title = document.getElementById('taskTitle').value.trim();
+  if (!title) { document.getElementById('taskTitle').focus(); return; }
+
+  var id = document.getElementById('taskEditId').value;
+  var prefix = document.getElementById('taskEditId').getAttribute('data-prefix');
+  var list = getTaskList(prefix);
+  var priority = document.getElementById('taskPriority').value;
+  var status = document.getElementById('taskStatus').value;
+  if (VALID_PRIORITIES.indexOf(priority) === -1) priority = 'normal';
+  if (VALID_STATUSES.indexOf(status) === -1) status = 'new';
+
+  var data = {
+    title: title,
+    extra: document.getElementById('taskExtra').value.trim(),
+    dueDate: document.getElementById('taskDueDate').value,
+    reminder: document.getElementById('taskReminder').value,
+    priority: priority,
+    status: status,
+    notes: sanitizeHTML(document.getElementById('taskNotes').innerHTML)
+  };
+
+  if (id) {
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === parseInt(id)) {
+        for (var k in data) list[i][k] = data[k];
+        break;
+      }
+    }
+  } else {
+    data.id = nextId(list);
+    data.createdAt = new Date().toISOString().slice(0, 10);
+    list.push(data);
+  }
+
+  saveTaskList(prefix);
+  closeAllModals();
+  if (prefix === 'project') renderProjectTasks();
+  else renderTasks();
+}
+
+function editTask(id, prefix) {
+  var list = getTaskList(prefix);
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].id === id) { openTaskModal(list[i], prefix); return; }
+  }
+}
+
+function completeTask(id, prefix) {
+  var list = getTaskList(prefix);
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].id === id) { list[i].status = 'done'; break; }
+  }
+  saveTaskList(prefix);
+  if (prefix === 'project') renderProjectTasks();
+  else renderTasks();
+}
+
+function confirmDeleteTask(id, prefix) {
+  document.getElementById('confirmText').textContent = 'Удалить эту задачу? Это действие нельзя отменить.';
+  document.getElementById('confirmAction').onclick = function() {
+    deleteTask(id, prefix);
+    closeAllModals();
+  };
+  showModal('confirmModal');
+}
+
+function deleteTask(id, prefix) {
+  var list = getTaskList(prefix);
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].id === id) { list.splice(i, 1); break; }
+  }
+  if (prefix === 'project' && currentProjectId) projectTasks[currentProjectId] = list;
+  else tasks = list;
+  saveTaskList(prefix);
+  if (prefix === 'project') renderProjectTasks();
+  else renderTasks();
+}
+
+function openCalModal(taskId, prefix) {
+  var list = getTaskList(prefix);
+  var task = null;
+  for (var i = 0; i < list.length; i++) { if (list[i].id === taskId) { task = list[i]; break; } }
+  if (!task) return;
+  document.getElementById('calTaskId').value = taskId;
+  document.getElementById('calTaskId').setAttribute('data-prefix', prefix);
+  document.getElementById('calDate').value = task.dueDate || new Date().toISOString().slice(0, 10);
+  document.getElementById('calTime').value = '10:00';
+  showModal('calModal');
+}
+
+function generateICS() {
+  var taskId = parseInt(document.getElementById('calTaskId').value);
+  var prefix = document.getElementById('calTaskId').getAttribute('data-prefix');
+  var list = getTaskList(prefix);
+  var task = null;
+  for (var i = 0; i < list.length; i++) { if (list[i].id === taskId) { task = list[i]; break; } }
+  if (!task) return;
+
+  var date = document.getElementById('calDate').value;
+  var time = document.getElementById('calTime').value;
+  if (!date) return;
+  var dtParts = date.split('-');
+  var tmParts = (time || '10:00').split(':');
+  var dtStart = dtParts[0] + dtParts[1] + dtParts[2] + 'T' + (tmParts[0] || '10') + (tmParts[1] || '00') + '00';
+  var h = parseInt(tmParts[0] || 10) + 1;
+  var dtEnd = dtParts[0] + dtParts[1] + dtParts[2] + 'T' + String(h < 10 ? '0' + h : h) + (tmParts[1] || '00') + '00';
+
+  var alarm = '';
+  if (task.reminder !== '' && task.reminder !== undefined) {
+    var days = parseInt(task.reminder);
+    if (days === 0) alarm = 'BEGIN:VALARM\r\nTRIGGER:PT0M\r\nACTION:DISPLAY\r\nDESCRIPTION:Напоминание\r\nEND:VALARM\r\n';
+    else alarm = 'BEGIN:VALARM\r\nTRIGGER:-P' + days + 'D\r\nACTION:DISPLAY\r\nDESCRIPTION:Напоминание\r\nEND:VALARM\r\n';
+  }
+
+  var uid = 'task-' + task.id + '-' + Date.now() + '@lawyertasks';
+  var ics = 'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//LawyerTasks//RU\r\nBEGIN:VEVENT\r\n';
+  ics += 'UID:' + uid + '\r\n';
+  ics += 'DTSTART:' + dtStart + '\r\n';
+  ics += 'DTEND:' + dtEnd + '\r\n';
+  ics += 'SUMMARY:' + task.title.replace(/[\r\n]/g, ' ') + '\r\n';
+  if (task.extra) ics += 'DESCRIPTION:' + task.extra.replace(/[\r\n]/g, '\\n') + '\r\n';
+  ics += alarm;
+  ics += 'END:VEVENT\r\nEND:VCALENDAR';
+
+  var blob = new Blob([ics], {type: 'text/calendar;charset=utf-8'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'task-' + task.id + '.ics';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  closeAllModals();
+}
+
+// Projects
+function openProjectModal(proj) {
+  document.getElementById('projectEditId').value = proj ? proj.id : '';
+  document.getElementById('projectModalTitle').textContent = proj ? 'Редактирование проекта' : 'Новый проект';
+  document.getElementById('projectName').value = proj ? proj.name : '';
+  document.getElementById('projectDesc').value = proj ? proj.desc : '';
+  showModal('projectModal');
+}
+
+function saveProject() {
+  var name = document.getElementById('projectName').value.trim();
+  if (!name) { document.getElementById('projectName').focus(); return; }
+  var id = document.getElementById('projectEditId').value;
+  if (id) {
+    for (var i = 0; i < projects.length; i++) {
+      if (projects[i].id === parseInt(id)) {
+        projects[i].name = name;
+        projects[i].desc = document.getElementById('projectDesc').value.trim();
+        break;
+      }
+    }
+  } else {
+    projects.push({
+      id: nextId(projects),
+      name: name,
+      desc: document.getElementById('projectDesc').value.trim(),
+      createdAt: new Date().toISOString().slice(0, 10)
+    });
+  }
+  saveData('lawyerProjects', projects);
+  closeAllModals();
+  renderProjects();
+}
+
+function renderProjects() {
+  var q = (document.getElementById('projectSearch').value || '').toLowerCase().trim();
+  var container = document.getElementById('projectList');
+  var html = '';
+  var filtered = projects.filter(function(p) {
+    if (!q) return true;
+    return p.name.toLowerCase().indexOf(q) !== -1 || (p.desc || '').toLowerCase().indexOf(q) !== -1;
+  });
+  if (filtered.length === 0) {
+    html = '<div class="empty-state">Нет проектов</div>';
+  } else {
+    for (var i = 0; i < filtered.length; i++) {
+      var p = filtered[i];
+      var ptasks = projectTasks[p.id] || [];
+      var activeCount = ptasks.filter(function(t) { return t.status !== 'done'; }).length;
+      html += '<div class="project-card" onclick="openProject(' + p.id + ')">';
+      html += '<div class="project-name">' + escapeHTML(p.name) + '</div>';
+      if (p.desc) html += '<div class="project-desc">' + escapeHTML(p.desc) + '</div>';
+      html += '<div class="project-count">Задач: ' + ptasks.length + ' (активных: ' + activeCount + ')</div>';
+      html += '<div class="project-actions">';
+      html += '<button class="task-action-btn" onclick="event.stopPropagation();editProject(' + p.id + ')">Изменить</button>';
+      html += '<button class="task-action-btn btn-delete" onclick="event.stopPropagation();confirmDeleteProject(' + p.id + ')">Удалить</button>';
+      html += '</div></div>';
+    }
+  }
+  container.innerHTML = html;
+  updateBadges();
+}
+
+function editProject(id) {
+  for (var i = 0; i < projects.length; i++) {
+    if (projects[i].id === id) { openProjectModal(projects[i]); return; }
+  }
+}
+
+function confirmDeleteProject(id) {
+  document.getElementById('confirmText').textContent = 'Удалить проект и все его задачи? Это действие нельзя отменить.';
+  document.getElementById('confirmAction').onclick = function() {
+    for (var i = 0; i < projects.length; i++) {
+      if (projects[i].id === id) { projects.splice(i, 1); break; }
+    }
+    delete projectTasks[id];
+    saveData('lawyerProjects', projects);
+    saveData('lawyerProjectTasks', projectTasks);
+    closeAllModals();
+    renderProjects();
+  };
+  showModal('confirmModal');
+}
+
+function openProject(id) {
+  currentProjectId = id;
+  var proj = null;
+  for (var i = 0; i < projects.length; i++) { if (projects[i].id === id) { proj = projects[i]; break; } }
+  if (!proj) return;
+
+  document.getElementById('tabProjects').style.display = 'none';
+  document.getElementById('tabProjectDetail').style.display = '';
+  document.getElementById('mainTabs').style.display = 'none';
+  document.getElementById('headerTitle').innerHTML = '<button class="header-back" onclick="switchTab(\'projects\')">← Назад</button> ' + escapeHTML(proj.name);
+  projectCompletedVisible = false;
+  renderProjectTasks();
+}
+
+function renderProjectTasks() {
+  if (!currentProjectId) return;
+  var list = projectTasks[currentProjectId] || [];
+  var q = document.getElementById('projectTaskSearch').value;
+  var result = filterAndSort(list, q, currentProjectTaskFilter);
+  var container = document.getElementById('projectTaskList');
+  var html = '';
+  if (result.active.length === 0 && result.done.length === 0) {
+    html = '<div class="empty-state">Нет задач в проекте</div>';
+  } else {
+    for (var i = 0; i < result.active.length; i++) html += renderTaskCard(result.active[i], true);
+    if (result.done.length > 0) {
+      html += '<div class="completed-toggle" onclick="toggleCompleted(true)">';
+      html += '<span class="arrow' + (projectCompletedVisible ? ' open' : '') + '">▸</span> Завершённые (' + result.done.length + ')';
+      html += '</div>';
+      html += '<div class="completed-list' + (projectCompletedVisible ? ' open' : '') + '">';
+      for (var j = 0; j < result.done.length; j++) html += renderTaskCard(result.done[j], true);
+      html += '</div>';
+    }
+  }
+  container.innerHTML = html;
+  updateBadges();
+}
+
+// Notes
+function renderNotes() {
+  var q = (document.getElementById('noteSearch').value || '').toLowerCase().trim();
+  var container = document.getElementById('noteList');
+  var filtered = notes.filter(function(n) {
+    if (!q) return true;
+    return (n.title || '').toLowerCase().indexOf(q) !== -1 || (n.body || '').toLowerCase().indexOf(q) !== -1;
+  });
+  var html = '';
+  if (filtered.length === 0) {
+    html = '<div class="empty-state">Нет заметок</div>';
+  } else {
+    for (var i = 0; i < filtered.length; i++) {
+      var n = filtered[i];
+      var preview = (n.body || '').replace(/<[^>]*>/g, '').substring(0, 100);
+      html += '<div class="note-card" onclick="openNoteEditor(' + n.id + ')">';
+      html += '<div class="note-title">' + escapeHTML(n.title || 'Без заголовка') + '</div>';
+      if (preview) html += '<div class="note-preview">' + escapeHTML(preview) + '</div>';
+      html += '<div class="note-date">' + escapeHTML(formatDate(n.updatedAt || n.createdAt)) + '</div>';
+      html += '<div class="project-actions" style="margin-top:8px">';
+      html += '<button class="task-action-btn btn-delete" onclick="event.stopPropagation();confirmDeleteNote(' + n.id + ')">Удалить</button>';
+      html += '</div></div>';
+    }
+  }
+  container.innerHTML = html;
+  updateBadges();
+}
+
+function createNewNote() {
+  var n = {
+    id: nextId(notes),
+    title: '',
+    body: '',
+    createdAt: new Date().toISOString().slice(0, 10),
+    updatedAt: new Date().toISOString().slice(0, 10)
+  };
+  notes.push(n);
+  saveData('lawyerNotes', notes);
+  openNoteEditor(n.id);
+}
+
+function openNoteEditor(id) {
+  currentNoteId = id;
+  var note = null;
+  for (var i = 0; i < notes.length; i++) { if (notes[i].id === id) { note = notes[i]; break; } }
+  if (!note) return;
+
+  document.getElementById('mainHeader').style.display = 'none';
+  document.getElementById('tabNotes').style.display = 'none';
+  document.getElementById('fabBtn').style.display = 'none';
+  document.getElementById('noteEditorView').classList.add('active');
+  document.getElementById('noteEditorTitle').value = note.title || '';
+  document.getElementById('noteEditorBody').innerHTML = sanitizeHTML(note.body || '');
+}
+
+function closeNoteEditor() {
+  saveCurrentNote();
+  currentNoteId = null;
+  document.getElementById('noteEditorView').classList.remove('active');
+  document.getElementById('mainHeader').style.display = '';
+  document.getElementById('fabBtn').style.display = '';
+  switchTab('notes');
+}
+
+function saveCurrentNote() {
+  if (!currentNoteId) return;
+  for (var i = 0; i < notes.length; i++) {
+    if (notes[i].id === currentNoteId) {
+      notes[i].title = document.getElementById('noteEditorTitle').value.trim();
+      notes[i].body = sanitizeHTML(document.getElementById('noteEditorBody').innerHTML);
+      notes[i].updatedAt = new Date().toISOString().slice(0, 10);
+      break;
+    }
+  }
+  saveData('lawyerNotes', notes);
+}
+
+function confirmDeleteNote(id) {
+  document.getElementById('confirmText').textContent = 'Удалить эту заметку? Это действие нельзя отменить.';
+  document.getElementById('confirmAction').onclick = function() {
+    for (var i = 0; i < notes.length; i++) {
+      if (notes[i].id === id) { notes.splice(i, 1); break; }
+    }
+    saveData('lawyerNotes', notes);
+    closeAllModals();
+    renderNotes();
+  };
+  showModal('confirmModal');
+}
+
+// Editor commands
+function execTaskCmd(cmd) {
+  document.getElementById('taskNotes').focus();
+  if (cmd === 'bold') document.execCommand('bold', false, null);
+  else if (cmd === 'list') document.execCommand('insertUnorderedList', false, null);
+}
+
+function execNoteCmd(cmd) {
+  document.getElementById('noteEditorBody').focus();
+  if (cmd === 'bold') document.execCommand('bold', false, null);
+  else if (cmd === 'list') document.execCommand('insertUnorderedList', false, null);
+}
+
+// Modal management
+function showModal(id) {
+  document.getElementById('overlay').classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function closeAllModals() {
+  document.getElementById('overlay').classList.remove('active');
+  var modals = document.querySelectorAll('.modal');
+  for (var i = 0; i < modals.length; i++) modals[i].classList.remove('active');
+}
+
+// Export / Backup
+function exportCSV() {
+  var header = ['ID', 'Суть задачи', 'Доп. информация', 'Дата ответа', 'Значимость', 'Статус', 'Дата создания'];
+  var rows = [header.join(',')];
+  for (var i = 0; i < tasks.length; i++) {
+    var t = tasks[i];
+    rows.push([
+      t.id,
+      csvEscape(t.title),
+      csvEscape(t.extra),
+      csvEscape(t.dueDate),
+      csvEscape(PRIORITY_LABELS[t.priority] || t.priority),
+      csvEscape(STATUS_LABELS[t.status] || t.status),
+      csvEscape(t.createdAt)
+    ].join(','));
+  }
+  var csv = '﻿' + rows.join('\r\n');
+  var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
+  downloadBlob(blob, 'tasks-' + new Date().toISOString().slice(0, 10) + '.csv');
+}
+
+function backupJSON() {
+  var data = {
+    tasks: tasks,
+    projects: projects,
+    projectTasks: projectTasks,
+    notes: notes,
+    exportDate: new Date().toISOString()
+  };
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  downloadBlob(blob, 'backup-' + new Date().toISOString().slice(0, 10) + '.json');
+  saveData('lastBackupDate', new Date().toISOString().slice(0, 10));
+}
+
+function restoreJSON(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if (data.tasks) { tasks = data.tasks; saveData('lawyerTasks', tasks); }
+      if (data.projects) { projects = data.projects; saveData('lawyerProjects', projects); }
+      if (data.projectTasks) { projectTasks = data.projectTasks; saveData('lawyerProjectTasks', projectTasks); }
+      if (data.notes) { notes = data.notes; saveData('lawyerNotes', notes); }
+      switchTab(currentTab);
+    } catch(err) {
+      alert('Ошибка при восстановлении: неверный формат файла');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function downloadBlob(blob, filename) {
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Auto-grow textarea
+function autoGrow(el) {
+  if (!el) return;
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+document.addEventListener('input', function(e) {
+  if (e.target.tagName === 'TEXTAREA') autoGrow(e.target);
+});
+
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeAllModals();
+});
+
+// Init
+renderTasks();
+updateBadges();
+</script>
+</body>
+</html>
