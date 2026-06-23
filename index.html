@@ -1144,16 +1144,93 @@ function exportCSV() {
 }
 
 function backupJSON() {
+  var exportTasks = tasks.map(function(t) {
+    return {
+      id: t.id,
+      dateReceived: t.dateReceived || t.createdAt || '',
+      summary: t.title,
+      additionalInfo: t.extra || '',
+      responseDate: t.dueDate || '',
+      reminderDays: t.reminder !== '' && t.reminder !== undefined ? parseInt(t.reminder) : 1,
+      priority: t.priority === 'normal' ? 'none' : t.priority,
+      status: t.status === 'done' ? 'completed' : t.status === 'inwork' ? 'in-progress' : t.status,
+      notes: t.notes || '',
+      createdAt: t.createdAt || '',
+      completedAt: t.completedAt || undefined
+    };
+  });
+  var exportProjects = projects.map(function(p) {
+    return {id: p.id, name: p.name, description: p.desc || '', createdAt: p.createdAt || ''};
+  });
+  var exportProjectTasks = {};
+  for (var pid in projectTasks) {
+    exportProjectTasks[pid] = projectTasks[pid].map(function(t) {
+      return {
+        id: t.id,
+        dateReceived: t.dateReceived || t.createdAt || '',
+        summary: t.title,
+        additionalInfo: t.extra || '',
+        responseDate: t.dueDate || '',
+        reminderDays: t.reminder !== '' && t.reminder !== undefined ? parseInt(t.reminder) : 1,
+        priority: t.priority === 'normal' ? 'none' : t.priority,
+        status: t.status === 'done' ? 'completed' : t.status === 'inwork' ? 'in-progress' : t.status,
+        notes: t.notes || '',
+        createdAt: t.createdAt || ''
+      };
+    });
+  }
+  var exportNotes = notes.map(function(n) {
+    return {id: n.id, title: n.title, body: n.body || '', createdAt: n.createdAt || '', updatedAt: n.updatedAt || ''};
+  });
   var data = {
-    tasks: tasks,
-    projects: projects,
-    projectTasks: projectTasks,
-    notes: notes,
-    exportDate: new Date().toISOString()
+    version: 3,
+    exportDate: new Date().toISOString(),
+    tasks: exportTasks,
+    projects: exportProjects,
+    projectTasks: exportProjectTasks,
+    userNotes: exportNotes
   };
   var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-  downloadBlob(blob, 'backup-' + new Date().toISOString().slice(0, 10) + '.json');
+  downloadBlob(blob, 'tasks_backup_' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '.json');
   saveData('lastBackupDate', new Date().toISOString().slice(0, 10));
+}
+
+function mapStatus(s) {
+  if (s === 'completed') return 'done';
+  if (s === 'in-progress') return 'inwork';
+  if (VALID_STATUSES.indexOf(s) !== -1) return s;
+  return 'new';
+}
+
+function mapPriority(p) {
+  if (p === 'none') return 'normal';
+  if (VALID_PRIORITIES.indexOf(p) !== -1) return p;
+  return 'normal';
+}
+
+function importTask(t) {
+  return {
+    id: t.id,
+    title: t.title || t.summary || '',
+    extra: t.extra || t.additionalInfo || '',
+    dueDate: t.dueDate || t.responseDate || '',
+    reminder: t.reminder !== undefined && t.reminder !== '' ? String(t.reminder) : (t.reminderDays !== undefined ? String(t.reminderDays) : ''),
+    priority: mapPriority(t.priority),
+    status: mapStatus(t.status),
+    notes: t.notes || '',
+    createdAt: t.createdAt || t.dateReceived || new Date().toISOString().slice(0, 10),
+    dateReceived: t.dateReceived || t.createdAt || '',
+    completedAt: t.completedAt || undefined
+  };
+}
+
+function importProject(p) {
+  return {
+    id: p.id,
+    name: p.name || '',
+    desc: p.desc || p.description || '',
+    createdAt: p.createdAt || new Date().toISOString().slice(0, 10)
+  };
 }
 
 function restoreJSON(event) {
@@ -1163,10 +1240,26 @@ function restoreJSON(event) {
   reader.onload = function(e) {
     try {
       var data = JSON.parse(e.target.result);
-      if (data.tasks) { tasks = data.tasks; saveData('lawyerTasks', tasks); }
-      if (data.projects) { projects = data.projects; saveData('lawyerProjects', projects); }
-      if (data.projectTasks) { projectTasks = data.projectTasks; saveData('lawyerProjectTasks', projectTasks); }
-      if (data.notes) { notes = data.notes; saveData('lawyerNotes', notes); }
+      if (data.tasks) {
+        tasks = data.tasks.map(importTask);
+        saveData('lawyerTasks', tasks);
+      }
+      if (data.projects) {
+        projects = data.projects.map(importProject);
+        saveData('lawyerProjects', projects);
+      }
+      if (data.projectTasks) {
+        projectTasks = {};
+        for (var pid in data.projectTasks) {
+          projectTasks[pid] = data.projectTasks[pid].map(importTask);
+        }
+        saveData('lawyerProjectTasks', projectTasks);
+      }
+      var importedNotes = data.notes || data.userNotes;
+      if (importedNotes) {
+        notes = importedNotes;
+        saveData('lawyerNotes', notes);
+      }
       switchTab(currentTab);
     } catch(err) {
       alert('Ошибка при восстановлении: неверный формат файла');
