@@ -1,0 +1,1190 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		013601E1AAFF849DCD5E0422 /* PlanFactCalculatorTests.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 9FC1F36B59C1BD2398809877 /* PlanFactCalculatorTests.swift */;
+		};
+		02529364E7024F42CC8F4070 /* CategoryBreakdownChart.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 99D140B474C3B7673549F422 /* CategoryBreakdownChart.swift */;
+		};
+		075A5515CB04DB41865E1E51 /* Theme.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = A89ACAD8F39FDA99AC9D840B /* Theme.swift */;
+		};
+		09B0CD177425ED89B2A83157 /* WeekIntervalTests.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 5A14117E88A2904173769083 /* WeekIntervalTests.swift */;
+		};
+		09C572DD121D19397B33EB18 /* CSVExporter.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 3FD4E82122C06AEBADEF6F6D /* CSVExporter.swift */;
+		};
+		157FBB6B1C245FE17B7C97BA /* DecimalCurrency.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 69F3DF25C050BFF2B82EFFFE /* DecimalCurrency.swift */;
+		};
+		210D8F840D824EFEE0A73F1A /* ShareSheet.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 174D3E835C2404A95CD1C301 /* ShareSheet.swift */;
+		};
+		21A4B2F44F25A85BF688A33D /* BiometricAuthManager.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 19A6DD5D6BDDFD7312B48496 /* BiometricAuthManager.swift */;
+		};
+		2895E48D8496D32A54C5E352 /* AddEditExpenseView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 8295AC804602F9AEDF048477 /* AddEditExpenseView.swift */;
+		};
+		28D1140E8A8A7900F7090AEE /* WeekSelectorHeader.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 1A1534E5336B18E17D756149 /* WeekSelectorHeader.swift */;
+		};
+		4208C9019788A72A930777F1 /* WeeklyTrendCalculator.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 2AA8B10F1033275DDA73A602 /* WeeklyTrendCalculator.swift */;
+		};
+		45EA4412ED751812D98C5E4E /* ExpenseRowView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = C7F7C8EAE8EE08CBB311A10B /* ExpenseRowView.swift */;
+		};
+		48DBA7A4C547AE7AD1DE432A /* MainExpensesView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 0208B4921E11DB7E057F826C /* MainExpensesView.swift */;
+		};
+		57533ECE0DF75E0BA3551315 /* WeekExpenseListView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 6DEBDE5CC938666612FE3A0F /* WeekExpenseListView.swift */;
+		};
+		5A13C529F2FD0B36E32E7B35 /* SettingsView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 0CFCF2161A254D8F2C8B9705 /* SettingsView.swift */;
+		};
+		6BF1E460EA00F07222D00000 /* ExpenseCategory.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 9D87E1498BB0291C27C87EC1 /* ExpenseCategory.swift */;
+		};
+		6E36206059BD695CD8BCD8F9 /* DateWeek.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 1C1BC7995DB7AE6F80A32661 /* DateWeek.swift */;
+		};
+		71494771FFE1A15179D36952 /* PersistenceController.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = AE671909FAA7BE047FB35FCA /* PersistenceController.swift */;
+		};
+		76C7EE10C4763AA1D193E825 /* RootTabView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 84D08B76AAD9EE8250CEB612 /* RootTabView.swift */;
+		};
+		78E95667062C13F21C395805 /* CSVExporterTests.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = DFDAB86012AD11B50D4BAEF3 /* CSVExporterTests.swift */;
+		};
+		7D1DBA83F5517888388F38D2 /* Assets.xcassets in Resources */ = {
+			isa = PBXBuildFile;
+			fileRef = F4520D96AC0EDB42E750BB2B /* Assets.xcassets */;
+		};
+		85986F4E26F8083E9795A0A4 /* WeeklyTrendCalculatorTests.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = B7E389796805DFB83B8355D3 /* WeeklyTrendCalculatorTests.swift */;
+		};
+		87F87CBF6E0FC5B69F588A75 /* ExportView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 0B777BFA98664AC480380633 /* ExportView.swift */;
+		};
+		880699621924B8614F3B7089 /* ExpenseStatus.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 4C75F0F6DFC0E5849A17AE3B /* ExpenseStatus.swift */;
+		};
+		8C4119972319628E3B71E74F /* ReconcileExpenseSheet.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = B56EE143DF700DB5FF29F88E /* ReconcileExpenseSheet.swift */;
+		};
+		955A16032E11CD1A87404E36 /* CalendarChangeApplier.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 494477AC41042C74870B29C1 /* CalendarChangeApplier.swift */;
+		};
+		959052D29709F648AEDDD61B /* PlanFactSummary.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = F9DA40AA0DF0CA2DD247AC05 /* PlanFactSummary.swift */;
+		};
+		9C0125591F22811B5CD18948 /* PDFExporterTests.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = ABBCDB3DDFDC219B638945C1 /* PDFExporterTests.swift */;
+		};
+		9F1C84293432005BED1F3661 /* Color+Hex.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 502E4B098CE28D182F2160CF /* Color+Hex.swift */;
+		};
+		9F72133D53BCA8A567C4940D /* FinPlannerApp.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 9F4E96E0636AFF70B7F8A5C3 /* FinPlannerApp.swift */;
+		};
+		A186A8E06E3F4B6959D3E86E /* AnalyticsView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 37C4D344713962DA934B4AD8 /* AnalyticsView.swift */;
+		};
+		A9BE22984E0424FD1CF552ED /* CalendarSyncing.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 385437B3D7E881FB2570F436 /* CalendarSyncing.swift */;
+		};
+		B116FEA50DD47A0885FCEF5E /* WeeklyTrendChart.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 8BEA2343D1E58024D8564B6A /* WeeklyTrendChart.swift */;
+		};
+		CC8DBF1FA291C0D79BA7377D /* CalendarChangeApplierTests.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 1FBB1A1C28ACA9FA6A679844 /* CalendarChangeApplierTests.swift */;
+		};
+		DB7865B1B3C9569649BD9A9E /* CategoryBadge.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 60690A004B2D8EF914F71362 /* CategoryBadge.swift */;
+		};
+		DE85F98E27CA4EB23DD8FEA2 /* AnalyticsPeriod.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 4309A40FB7CD88FAF1BB4CD1 /* AnalyticsPeriod.swift */;
+		};
+		E4B8364F68967CF6AED11AA5 /* PlanVsFactChart.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 64ADE0A5BE85519904101CD1 /* PlanVsFactChart.swift */;
+		};
+		E7DB7F562C94FD9C6FC2A3EC /* EventKitCalendarSyncService.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 9A8772F29F12B364232EBC9C /* EventKitCalendarSyncService.swift */;
+		};
+		E826FBE52F47441A00782F41 /* AppLockView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = D4D6A142C49077C2A875E397 /* AppLockView.swift */;
+		};
+		EA637257F682AB86BA58F99F /* PDFExporter.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 0E857F33DF3DBD7306220EA3 /* PDFExporter.swift */;
+		};
+		EC6A47E23881553A964D9364 /* CalendarSyncServiceEnvironment.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 7D529A45927D9BB3FD7300C8 /* CalendarSyncServiceEnvironment.swift */;
+		};
+		EC862BDC66D31C064B2FF95E /* ExpenseItem.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 0B5F29C5BC51C2D9FB1A1DC1 /* ExpenseItem.swift */;
+		};
+		F0478243B8A2F21E9BFCB052 /* CardBackground.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = E20E749A15E44C32AF32B801 /* CardBackground.swift */;
+		};
+		F10D57FD1D95C8406A792BE7 /* ExpenseSortOption.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 1AE99D52BECBFDEBC71B9ACD /* ExpenseSortOption.swift */;
+		};
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3C33D113E294CAEDB3702FAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73947FAB6CD7FF2D9E6DC557 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ECB2566DFE4ADE0D63B1525D /* FinPlanner */;
+			remoteInfo = FinPlanner;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0208B4921E11DB7E057F826C /* MainExpensesView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = MainExpensesView.swift;
+			sourceTree = "<group>";
+		};
+		0B5F29C5BC51C2D9FB1A1DC1 /* ExpenseItem.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ExpenseItem.swift;
+			sourceTree = "<group>";
+		};
+		0B777BFA98664AC480380633 /* ExportView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ExportView.swift;
+			sourceTree = "<group>";
+		};
+		0CFCF2161A254D8F2C8B9705 /* SettingsView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = SettingsView.swift;
+			sourceTree = "<group>";
+		};
+		0E149E5989468865E260B166 /* FinPlannerTests.xctest */ = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = FinPlannerTests.xctest;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0E857F33DF3DBD7306220EA3 /* PDFExporter.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PDFExporter.swift;
+			sourceTree = "<group>";
+		};
+		12F1C9823B7D241C34392D7F /* Info.plist */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = Info.plist;
+			sourceTree = "<group>";
+		};
+		174D3E835C2404A95CD1C301 /* ShareSheet.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ShareSheet.swift;
+			sourceTree = "<group>";
+		};
+		19A6DD5D6BDDFD7312B48496 /* BiometricAuthManager.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BiometricAuthManager.swift;
+			sourceTree = "<group>";
+		};
+		1A1534E5336B18E17D756149 /* WeekSelectorHeader.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WeekSelectorHeader.swift;
+			sourceTree = "<group>";
+		};
+		1AE99D52BECBFDEBC71B9ACD /* ExpenseSortOption.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ExpenseSortOption.swift;
+			sourceTree = "<group>";
+		};
+		1C1BC7995DB7AE6F80A32661 /* DateWeek.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = DateWeek.swift;
+			sourceTree = "<group>";
+		};
+		1FBB1A1C28ACA9FA6A679844 /* CalendarChangeApplierTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CalendarChangeApplierTests.swift;
+			sourceTree = "<group>";
+		};
+		2AA8B10F1033275DDA73A602 /* WeeklyTrendCalculator.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WeeklyTrendCalculator.swift;
+			sourceTree = "<group>";
+		};
+		2EE486E7539FC5B628AD451F /* FinPlanner.app */ = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			path = FinPlanner.app;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		37C4D344713962DA934B4AD8 /* AnalyticsView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = AnalyticsView.swift;
+			sourceTree = "<group>";
+		};
+		385437B3D7E881FB2570F436 /* CalendarSyncing.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CalendarSyncing.swift;
+			sourceTree = "<group>";
+		};
+		3FD4E82122C06AEBADEF6F6D /* CSVExporter.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CSVExporter.swift;
+			sourceTree = "<group>";
+		};
+		4309A40FB7CD88FAF1BB4CD1 /* AnalyticsPeriod.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = AnalyticsPeriod.swift;
+			sourceTree = "<group>";
+		};
+		494477AC41042C74870B29C1 /* CalendarChangeApplier.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CalendarChangeApplier.swift;
+			sourceTree = "<group>";
+		};
+		4C75F0F6DFC0E5849A17AE3B /* ExpenseStatus.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ExpenseStatus.swift;
+			sourceTree = "<group>";
+		};
+		502E4B098CE28D182F2160CF /* Color+Hex.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "Color+Hex.swift";
+			sourceTree = "<group>";
+		};
+		5A14117E88A2904173769083 /* WeekIntervalTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WeekIntervalTests.swift;
+			sourceTree = "<group>";
+		};
+		60690A004B2D8EF914F71362 /* CategoryBadge.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CategoryBadge.swift;
+			sourceTree = "<group>";
+		};
+		64ADE0A5BE85519904101CD1 /* PlanVsFactChart.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PlanVsFactChart.swift;
+			sourceTree = "<group>";
+		};
+		69F3DF25C050BFF2B82EFFFE /* DecimalCurrency.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = DecimalCurrency.swift;
+			sourceTree = "<group>";
+		};
+		6DEBDE5CC938666612FE3A0F /* WeekExpenseListView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WeekExpenseListView.swift;
+			sourceTree = "<group>";
+		};
+		7D529A45927D9BB3FD7300C8 /* CalendarSyncServiceEnvironment.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CalendarSyncServiceEnvironment.swift;
+			sourceTree = "<group>";
+		};
+		8295AC804602F9AEDF048477 /* AddEditExpenseView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = AddEditExpenseView.swift;
+			sourceTree = "<group>";
+		};
+		84D08B76AAD9EE8250CEB612 /* RootTabView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = RootTabView.swift;
+			sourceTree = "<group>";
+		};
+		8BEA2343D1E58024D8564B6A /* WeeklyTrendChart.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WeeklyTrendChart.swift;
+			sourceTree = "<group>";
+		};
+		99D140B474C3B7673549F422 /* CategoryBreakdownChart.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CategoryBreakdownChart.swift;
+			sourceTree = "<group>";
+		};
+		9A8772F29F12B364232EBC9C /* EventKitCalendarSyncService.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = EventKitCalendarSyncService.swift;
+			sourceTree = "<group>";
+		};
+		9D87E1498BB0291C27C87EC1 /* ExpenseCategory.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ExpenseCategory.swift;
+			sourceTree = "<group>";
+		};
+		9F4E96E0636AFF70B7F8A5C3 /* FinPlannerApp.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = FinPlannerApp.swift;
+			sourceTree = "<group>";
+		};
+		9FC1F36B59C1BD2398809877 /* PlanFactCalculatorTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PlanFactCalculatorTests.swift;
+			sourceTree = "<group>";
+		};
+		A89ACAD8F39FDA99AC9D840B /* Theme.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = Theme.swift;
+			sourceTree = "<group>";
+		};
+		ABBCDB3DDFDC219B638945C1 /* PDFExporterTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PDFExporterTests.swift;
+			sourceTree = "<group>";
+		};
+		AE671909FAA7BE047FB35FCA /* PersistenceController.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PersistenceController.swift;
+			sourceTree = "<group>";
+		};
+		B56EE143DF700DB5FF29F88E /* ReconcileExpenseSheet.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ReconcileExpenseSheet.swift;
+			sourceTree = "<group>";
+		};
+		B7E389796805DFB83B8355D3 /* WeeklyTrendCalculatorTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WeeklyTrendCalculatorTests.swift;
+			sourceTree = "<group>";
+		};
+		C7F7C8EAE8EE08CBB311A10B /* ExpenseRowView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ExpenseRowView.swift;
+			sourceTree = "<group>";
+		};
+		D4D6A142C49077C2A875E397 /* AppLockView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = AppLockView.swift;
+			sourceTree = "<group>";
+		};
+		DFDAB86012AD11B50D4BAEF3 /* CSVExporterTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CSVExporterTests.swift;
+			sourceTree = "<group>";
+		};
+		E20E749A15E44C32AF32B801 /* CardBackground.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = CardBackground.swift;
+			sourceTree = "<group>";
+		};
+		F4520D96AC0EDB42E750BB2B /* Assets.xcassets */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder.assetcatalog;
+			path = Assets.xcassets;
+			sourceTree = "<group>";
+		};
+		F9DA40AA0DF0CA2DD247AC05 /* PlanFactSummary.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PlanFactSummary.swift;
+			sourceTree = "<group>";
+		};
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		97DE1B354DE4A775B0161D45 /* PBXFrameworksBuildPhase */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6FFC42DDA4158E4A2A3FE12 /* PBXFrameworksBuildPhase */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0CCA7E20F3E24294A8CAE029 /* FinPlanner */ = {
+			isa = PBXGroup;
+			children = (
+				A22A20983BF8CCFE11647689 /* App */,
+				5C696030EBF51678B1FC2F22 /* Core */,
+				57F70B1E04C8E8A23BFDA5E8 /* Features */,
+				C1A13A73E52720900EC22746 /* Resources */,
+			);
+			sourceTree = "<group>";
+			name = FinPlanner;
+			path = FinPlanner;
+		};
+		162ED1B36191CAAE1146F163 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1C1BC7995DB7AE6F80A32661 /* DateWeek.swift */,
+				69F3DF25C050BFF2B82EFFFE /* DecimalCurrency.swift */,
+			);
+			sourceTree = "<group>";
+			name = Extensions;
+			path = Extensions;
+		};
+		2A6DD592D39F2C88778F2537 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				494477AC41042C74870B29C1 /* CalendarChangeApplier.swift */,
+				7D529A45927D9BB3FD7300C8 /* CalendarSyncServiceEnvironment.swift */,
+				385437B3D7E881FB2570F436 /* CalendarSyncing.swift */,
+				9A8772F29F12B364232EBC9C /* EventKitCalendarSyncService.swift */,
+			);
+			sourceTree = "<group>";
+			name = Services;
+			path = Services;
+		};
+		2E60C068FB7435D91D4275FB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0B777BFA98664AC480380633 /* ExportView.swift */,
+				174D3E835C2404A95CD1C301 /* ShareSheet.swift */,
+			);
+			sourceTree = "<group>";
+			name = Views;
+			path = Views;
+		};
+		2F3A6B1E78F896718625FF06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2EE486E7539FC5B628AD451F /* FinPlanner.app */,
+				0E149E5989468865E260B166 /* FinPlannerTests.xctest */,
+			);
+			sourceTree = "<group>";
+			name = Products;
+		};
+		46B044A5A1A23265EC79F868 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37C4D344713962DA934B4AD8 /* AnalyticsView.swift */,
+				99D140B474C3B7673549F422 /* CategoryBreakdownChart.swift */,
+				64ADE0A5BE85519904101CD1 /* PlanVsFactChart.swift */,
+				8BEA2343D1E58024D8564B6A /* WeeklyTrendChart.swift */,
+			);
+			sourceTree = "<group>";
+			name = Views;
+			path = Views;
+		};
+		4A476D81605B3CA980B725E2 /* FinPlannerTests */ = {
+			isa = PBXGroup;
+			children = (
+				DFDAB86012AD11B50D4BAEF3 /* CSVExporterTests.swift */,
+				1FBB1A1C28ACA9FA6A679844 /* CalendarChangeApplierTests.swift */,
+				ABBCDB3DDFDC219B638945C1 /* PDFExporterTests.swift */,
+				9FC1F36B59C1BD2398809877 /* PlanFactCalculatorTests.swift */,
+				5A14117E88A2904173769083 /* WeekIntervalTests.swift */,
+				B7E389796805DFB83B8355D3 /* WeeklyTrendCalculatorTests.swift */,
+			);
+			sourceTree = "<group>";
+			name = FinPlannerTests;
+			path = FinPlannerTests;
+		};
+		4EF394BB83E32772414D31EE /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				D4D6A142C49077C2A875E397 /* AppLockView.swift */,
+				19A6DD5D6BDDFD7312B48496 /* BiometricAuthManager.swift */,
+				0CFCF2161A254D8F2C8B9705 /* SettingsView.swift */,
+			);
+			sourceTree = "<group>";
+			name = Security;
+			path = Security;
+		};
+		54A68C5251B71C6AA945CB09 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1AE99D52BECBFDEBC71B9ACD /* ExpenseSortOption.swift */,
+			);
+			sourceTree = "<group>";
+			name = ViewModels;
+			path = ViewModels;
+		};
+		57F70B1E04C8E8A23BFDA5E8 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				6CF3034C01BDAFBB1F0F05F1 /* Analytics */,
+				F140F6CE330F4E98992E9781 /* Calendar */,
+				8C495F0706B71B550A671A56 /* Expenses */,
+				74360ED7ED344A0F48603B26 /* Export */,
+			);
+			sourceTree = "<group>";
+			name = Features;
+			path = Features;
+		};
+		5C696030EBF51678B1FC2F22 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C6F6209308F954748F2ABACB /* DesignSystem */,
+				162ED1B36191CAAE1146F163 /* Extensions */,
+				B4FBA057D433984B6A0334B6 /* Models */,
+				7F7B4C27CD583457E2C851FF /* Persistence */,
+				4EF394BB83E32772414D31EE /* Security */,
+			);
+			sourceTree = "<group>";
+			name = Core;
+			path = Core;
+		};
+		5EE7CB59E061BD7BEB6837FB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3FD4E82122C06AEBADEF6F6D /* CSVExporter.swift */,
+				0E857F33DF3DBD7306220EA3 /* PDFExporter.swift */,
+			);
+			sourceTree = "<group>";
+			name = Services;
+			path = Services;
+		};
+		63F9658D70F09F2F8E1F9292 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2AA8B10F1033275DDA73A602 /* WeeklyTrendCalculator.swift */,
+			);
+			sourceTree = "<group>";
+			name = Services;
+			path = Services;
+		};
+		6CF3034C01BDAFBB1F0F05F1 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				63F9658D70F09F2F8E1F9292 /* Services */,
+				EDA35A727F64D4261E170F18 /* ViewModels */,
+				46B044A5A1A23265EC79F868 /* Views */,
+			);
+			sourceTree = "<group>";
+			name = Analytics;
+			path = Analytics;
+		};
+		74360ED7ED344A0F48603B26 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				5EE7CB59E061BD7BEB6837FB /* Services */,
+				2E60C068FB7435D91D4275FB /* Views */,
+			);
+			sourceTree = "<group>";
+			name = Export;
+			path = Export;
+		};
+		7F7B4C27CD583457E2C851FF /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				AE671909FAA7BE047FB35FCA /* PersistenceController.swift */,
+			);
+			sourceTree = "<group>";
+			name = Persistence;
+			path = Persistence;
+		};
+		8C495F0706B71B550A671A56 /* Expenses */ = {
+			isa = PBXGroup;
+			children = (
+				54A68C5251B71C6AA945CB09 /* ViewModels */,
+				AE4C8BE0F8B5D75B63C30F87 /* Views */,
+			);
+			sourceTree = "<group>";
+			name = Expenses;
+			path = Expenses;
+		};
+		938D015ADA917A90ED2D6889 /* PBXGroup */ = {
+			isa = PBXGroup;
+			children = (
+				0CCA7E20F3E24294A8CAE029 /* FinPlanner */,
+				4A476D81605B3CA980B725E2 /* FinPlannerTests */,
+				2F3A6B1E78F896718625FF06 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A22A20983BF8CCFE11647689 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9F4E96E0636AFF70B7F8A5C3 /* FinPlannerApp.swift */,
+				84D08B76AAD9EE8250CEB612 /* RootTabView.swift */,
+			);
+			sourceTree = "<group>";
+			name = App;
+			path = App;
+		};
+		AE4C8BE0F8B5D75B63C30F87 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8295AC804602F9AEDF048477 /* AddEditExpenseView.swift */,
+				C7F7C8EAE8EE08CBB311A10B /* ExpenseRowView.swift */,
+				0208B4921E11DB7E057F826C /* MainExpensesView.swift */,
+				B56EE143DF700DB5FF29F88E /* ReconcileExpenseSheet.swift */,
+				6DEBDE5CC938666612FE3A0F /* WeekExpenseListView.swift */,
+				1A1534E5336B18E17D756149 /* WeekSelectorHeader.swift */,
+			);
+			sourceTree = "<group>";
+			name = Views;
+			path = Views;
+		};
+		B4FBA057D433984B6A0334B6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9D87E1498BB0291C27C87EC1 /* ExpenseCategory.swift */,
+				0B5F29C5BC51C2D9FB1A1DC1 /* ExpenseItem.swift */,
+				4C75F0F6DFC0E5849A17AE3B /* ExpenseStatus.swift */,
+				F9DA40AA0DF0CA2DD247AC05 /* PlanFactSummary.swift */,
+			);
+			sourceTree = "<group>";
+			name = Models;
+			path = Models;
+		};
+		C1A13A73E52720900EC22746 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F4520D96AC0EDB42E750BB2B /* Assets.xcassets */,
+				12F1C9823B7D241C34392D7F /* Info.plist */,
+			);
+			sourceTree = "<group>";
+			name = Resources;
+			path = Resources;
+		};
+		C6F6209308F954748F2ABACB /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				E20E749A15E44C32AF32B801 /* CardBackground.swift */,
+				60690A004B2D8EF914F71362 /* CategoryBadge.swift */,
+				502E4B098CE28D182F2160CF /* Color+Hex.swift */,
+				A89ACAD8F39FDA99AC9D840B /* Theme.swift */,
+			);
+			sourceTree = "<group>";
+			name = DesignSystem;
+			path = DesignSystem;
+		};
+		EDA35A727F64D4261E170F18 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4309A40FB7CD88FAF1BB4CD1 /* AnalyticsPeriod.swift */,
+			);
+			sourceTree = "<group>";
+			name = ViewModels;
+			path = ViewModels;
+		};
+		F140F6CE330F4E98992E9781 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				2A6DD592D39F2C88778F2537 /* Services */,
+			);
+			sourceTree = "<group>";
+			name = Calendar;
+			path = Calendar;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9D462E8A4D74BB698F5136C2 /* FinPlannerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E469ECBE47FE8BC641DE5A6 /* XCConfigurationList */;
+			buildPhases = (
+				0246B57008726770C7CD60EA /* PBXSourcesBuildPhase */,
+				D6FFC42DDA4158E4A2A3FE12 /* PBXFrameworksBuildPhase */,
+				2082A0AB8D80725826906B50 /* PBXResourcesBuildPhase */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				394A8E71EF697E43F9768722 /* PBXTargetDependency */,
+			);
+			name = FinPlannerTests;
+			productName = FinPlannerTests;
+			productReference = 0E149E5989468865E260B166 /* FinPlannerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ECB2566DFE4ADE0D63B1525D /* FinPlanner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 505BE65B56E2320664513AEC /* XCConfigurationList */;
+			buildPhases = (
+				483581EBC94D019EFB7B5416 /* PBXSourcesBuildPhase */,
+				97DE1B354DE4A775B0161D45 /* PBXFrameworksBuildPhase */,
+				78371D508257C846C1F709CD /* PBXResourcesBuildPhase */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FinPlanner;
+			productName = FinPlanner;
+			productReference = 2EE486E7539FC5B628AD451F /* FinPlanner.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		73947FAB6CD7FF2D9E6DC557 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					ECB2566DFE4ADE0D63B1525D /* FinPlanner */ = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					9D462E8A4D74BB698F5136C2 /* FinPlannerTests */ = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = ECB2566DFE4ADE0D63B1525D /* FinPlanner */;
+					};
+				};
+			};
+			buildConfigurationList = E0367D107ACD4D83ED767BFC /* XCConfigurationList */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = ru;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				ru,
+				Base,
+			);
+			mainGroup = 938D015ADA917A90ED2D6889 /* PBXGroup */;
+			productRefGroup = 2F3A6B1E78F896718625FF06 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ECB2566DFE4ADE0D63B1525D /* FinPlanner */,
+				9D462E8A4D74BB698F5136C2 /* FinPlannerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2082A0AB8D80725826906B50 /* PBXResourcesBuildPhase */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		78371D508257C846C1F709CD /* PBXResourcesBuildPhase */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D1DBA83F5517888388F38D2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0246B57008726770C7CD60EA /* PBXSourcesBuildPhase */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78E95667062C13F21C395805 /* CSVExporterTests.swift in Sources */,
+				CC8DBF1FA291C0D79BA7377D /* CalendarChangeApplierTests.swift in Sources */,
+				9C0125591F22811B5CD18948 /* PDFExporterTests.swift in Sources */,
+				013601E1AAFF849DCD5E0422 /* PlanFactCalculatorTests.swift in Sources */,
+				09B0CD177425ED89B2A83157 /* WeekIntervalTests.swift in Sources */,
+				85986F4E26F8083E9795A0A4 /* WeeklyTrendCalculatorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		483581EBC94D019EFB7B5416 /* PBXSourcesBuildPhase */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F72133D53BCA8A567C4940D /* FinPlannerApp.swift in Sources */,
+				76C7EE10C4763AA1D193E825 /* RootTabView.swift in Sources */,
+				F0478243B8A2F21E9BFCB052 /* CardBackground.swift in Sources */,
+				DB7865B1B3C9569649BD9A9E /* CategoryBadge.swift in Sources */,
+				9F1C84293432005BED1F3661 /* Color+Hex.swift in Sources */,
+				075A5515CB04DB41865E1E51 /* Theme.swift in Sources */,
+				6E36206059BD695CD8BCD8F9 /* DateWeek.swift in Sources */,
+				157FBB6B1C245FE17B7C97BA /* DecimalCurrency.swift in Sources */,
+				6BF1E460EA00F07222D00000 /* ExpenseCategory.swift in Sources */,
+				EC862BDC66D31C064B2FF95E /* ExpenseItem.swift in Sources */,
+				880699621924B8614F3B7089 /* ExpenseStatus.swift in Sources */,
+				959052D29709F648AEDDD61B /* PlanFactSummary.swift in Sources */,
+				71494771FFE1A15179D36952 /* PersistenceController.swift in Sources */,
+				E826FBE52F47441A00782F41 /* AppLockView.swift in Sources */,
+				21A4B2F44F25A85BF688A33D /* BiometricAuthManager.swift in Sources */,
+				5A13C529F2FD0B36E32E7B35 /* SettingsView.swift in Sources */,
+				4208C9019788A72A930777F1 /* WeeklyTrendCalculator.swift in Sources */,
+				DE85F98E27CA4EB23DD8FEA2 /* AnalyticsPeriod.swift in Sources */,
+				A186A8E06E3F4B6959D3E86E /* AnalyticsView.swift in Sources */,
+				02529364E7024F42CC8F4070 /* CategoryBreakdownChart.swift in Sources */,
+				E4B8364F68967CF6AED11AA5 /* PlanVsFactChart.swift in Sources */,
+				B116FEA50DD47A0885FCEF5E /* WeeklyTrendChart.swift in Sources */,
+				955A16032E11CD1A87404E36 /* CalendarChangeApplier.swift in Sources */,
+				EC6A47E23881553A964D9364 /* CalendarSyncServiceEnvironment.swift in Sources */,
+				A9BE22984E0424FD1CF552ED /* CalendarSyncing.swift in Sources */,
+				E7DB7F562C94FD9C6FC2A3EC /* EventKitCalendarSyncService.swift in Sources */,
+				F10D57FD1D95C8406A792BE7 /* ExpenseSortOption.swift in Sources */,
+				2895E48D8496D32A54C5E352 /* AddEditExpenseView.swift in Sources */,
+				45EA4412ED751812D98C5E4E /* ExpenseRowView.swift in Sources */,
+				48DBA7A4C547AE7AD1DE432A /* MainExpensesView.swift in Sources */,
+				8C4119972319628E3B71E74F /* ReconcileExpenseSheet.swift in Sources */,
+				57533ECE0DF75E0BA3551315 /* WeekExpenseListView.swift in Sources */,
+				28D1140E8A8A7900F7090AEE /* WeekSelectorHeader.swift in Sources */,
+				09C572DD121D19397B33EB18 /* CSVExporter.swift in Sources */,
+				EA637257F682AB86BA58F99F /* PDFExporter.swift in Sources */,
+				87F87CBF6E0FC5B69F588A75 /* ExportView.swift in Sources */,
+				210D8F840D824EFEE0A73F1A /* ShareSheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		394A8E71EF697E43F9768722 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ECB2566DFE4ADE0D63B1525D /* FinPlanner */;
+			targetProxy = 3C33D113E294CAEDB3702FAB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1F169250CB48BE87B0D79952 /* XCBuildConfiguration */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FinPlanner/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				"INFOPLIST_KEY_UISupportedInterfaceOrientations~ipad" = (
+					UIInterfaceOrientationPortrait,
+					UIInterfaceOrientationPortraitUpsideDown,
+					UIInterfaceOrientationLandscapeLeft,
+					UIInterfaceOrientationLandscapeRight,
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.financialplanner.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		56E4D1CBCBBB8710278A7EE0 /* XCBuildConfiguration */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.financialplanner.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FinPlanner.app/FinPlanner";
+			};
+			name = Debug;
+		};
+		6A4BBC461C83605562DEA0D8 /* XCBuildConfiguration */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FinPlanner/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				"INFOPLIST_KEY_UISupportedInterfaceOrientations~ipad" = (
+					UIInterfaceOrientationPortrait,
+					UIInterfaceOrientationPortraitUpsideDown,
+					UIInterfaceOrientationLandscapeLeft,
+					UIInterfaceOrientationLandscapeRight,
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.financialplanner.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		98C74F2FF9ACE191998ACB11 /* XCBuildConfiguration */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					DEBUG,
+					"$(inherited)",
+				);
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A7377D2C86425D3EE07D9F37 /* XCBuildConfiguration */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.financialplanner.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FinPlanner.app/FinPlanner";
+			};
+			name = Release;
+		};
+		B56013379ED15A0910FC6807 /* XCBuildConfiguration */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				ENABLE_NS_ASSERTIONS = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		505BE65B56E2320664513AEC /* XCConfigurationList */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A4BBC461C83605562DEA0D8 /* XCBuildConfiguration */,
+				1F169250CB48BE87B0D79952 /* XCBuildConfiguration */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6E469ECBE47FE8BC641DE5A6 /* XCConfigurationList */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56E4D1CBCBBB8710278A7EE0 /* XCBuildConfiguration */,
+				A7377D2C86425D3EE07D9F37 /* XCBuildConfiguration */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0367D107ACD4D83ED767BFC /* XCConfigurationList */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98C74F2FF9ACE191998ACB11 /* XCBuildConfiguration */,
+				B56013379ED15A0910FC6807 /* XCBuildConfiguration */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 73947FAB6CD7FF2D9E6DC557 /* Project object */;
+}
