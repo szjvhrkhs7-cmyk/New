@@ -1,7 +1,6 @@
 (() => {
   const storageKey = 'traveler-journal-days-v3';
   const legacyStorageKeys = ['traveler-journal-days-v2'];
-  const functionalTools = new Set(['plus', 'text', 'undo', 'comment', 'image', 'keyboard']);
   let saveTimer = null;
 
   function persist() {
@@ -49,23 +48,73 @@
     };
   }
 
-  function currentDay() {
-    return data.days.find((item) => Number(item.id) === Number(state.selectedDayId)) || data.days[0];
-  }
-
   function dateToInput() {
     const day = currentDay();
     if (day.dateISO) return day.dateISO;
     const match = String(day.fullDate || '').match(/(\d{1,2})\s+([а-яё]+)\s+(\d{4})/i);
     const months = { января:0, февраля:1, марта:2, апреля:3, мая:4, июня:5, июля:6, августа:7, сентября:8, октября:9, ноября:10, декабря:11 };
     if (match && months[match[2].toLowerCase()] !== undefined) {
-      return new Date(Number(match[3]), months[match[2].toLowerCase()], Number(match[1]), 12).toISOString().slice(0,10);
+      return new Date(Number(match[3]), months[match[2].toLowerCase()], Number(match[1]), 12).toISOString().slice(0, 10);
     }
-    return new Date().toISOString().slice(0,10);
+    return new Date().toISOString().slice(0, 10);
   }
 
-  function escapeAttribute(value) {
-    return String(value ?? '').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+  function currentDay() {
+    return data.days.find((item) => Number(item.id) === Number(state.selectedDayId)) || data.days[0];
+  }
+
+  function sanitizeRichHtml(html) {
+    const template = document.createElement('template');
+    template.innerHTML = String(html || '');
+    const allowed = new Set(['P', 'BR', 'STRONG', 'B', 'UL', 'OL', 'LI']);
+
+    const cleanNode = (node) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          if (!allowed.has(child.tagName)) {
+            const fragment = document.createDocumentFragment();
+            while (child.firstChild) fragment.append(child.firstChild);
+            child.replaceWith(fragment);
+            cleanNode(node);
+            return;
+          }
+          [...child.attributes].forEach((attribute) => child.removeAttribute(attribute.name));
+          cleanNode(child);
+        }
+      });
+    };
+
+    cleanNode(template.content);
+    return template.innerHTML;
+  }
+
+  function storeEditorContent(editor) {
+    const day = currentDay();
+    day.bodyHtml = sanitizeRichHtml(editor.innerHTML);
+    const plainParagraphs = [...editor.querySelectorAll(':scope > p')]
+      .map((node) => node.textContent.trim())
+      .filter(Boolean);
+    if (plainParagraphs.length) day.body = plainParagraphs;
+    saveSoon();
+  }
+
+  function applyEditorCommand(editor, command) {
+    if (!editor) return;
+    editor.focus();
+    document.execCommand(command, false, null);
+    storeEditorContent(editor);
+  }
+
+  function toolbarMarkup() {
+    return `
+      <button type="button" data-stage2-tool="plus" aria-label="Новый абзац" title="Новый абзац">${icon('plus')}</button>
+      <button type="button" data-stage2-tool="bold" aria-label="Жирный" title="Жирный"><span class="stage2-tool-glyph stage2-tool-glyph--bold">B</span></button>
+      <button type="button" data-stage2-tool="dash-list" aria-label="Список с тире" title="Список с тире"><span class="stage2-list-glyph"><i>—</i><i>—</i><i>—</i></span></button>
+      <button type="button" data-stage2-tool="number-list" aria-label="Нумерованный список" title="Нумерованный список"><span class="stage2-number-glyph"><i>1.</i><i>2.</i><i>3.</i></span></button>
+      <button type="button" data-stage2-tool="image" aria-label="Обои игрового дня" title="Обои игрового дня">${icon('image')}</button>
+      <button type="button" data-stage2-tool="undo" aria-label="Отменить" title="Отменить">${icon('undo')}</button>
+      <button type="button" data-stage2-tool="comment" aria-label="Заметка на полях" title="Заметка на полях">${icon('comment')}</button>
+    `;
   }
 
   function createDialogShell(innerHTML) {
@@ -74,7 +123,9 @@
     overlay.className = 'stage2-new-day-overlay';
     overlay.innerHTML = innerHTML;
     document.body.append(overlay);
-    overlay.addEventListener('click', (event) => { if (event.target === overlay) overlay.remove(); });
+    overlay.addEventListener('click', (event) => {
+      if (event.target === overlay) overlay.remove();
+    });
     overlay.querySelector('[data-cancel]')?.addEventListener('click', () => overlay.remove());
     return overlay;
   }
@@ -92,6 +143,7 @@
           <button type="submit" class="stage2-sheet-button stage2-sheet-button--primary">Создать</button>
         </div>
       </form>`);
+
     overlay.querySelector('form').addEventListener('submit', (event) => {
       event.preventDefault();
       const formData = new FormData(event.currentTarget);
@@ -100,7 +152,20 @@
       if (!title || !dateValue) return;
       const formatted = formatDate(dateValue);
       const nextId = data.days.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0) + 1;
-      data.days.push({ id:nextId, dayLabel:`Игровой день ${data.days.length + 1}`, title, shortDate:formatted.short, fullDate:formatted.full, dateISO:dateValue, image:'./assets/day-1.jpg', hero:'./assets/mountain-pass.jpg', quote:'«Новая дорога начинается с первой записи»', body:['Начните писать историю этого игрового дня...'], note:['Заметка на полях'], footer:'Продолжение следует.' });
+      data.days.push({
+        id: nextId,
+        dayLabel: `Игровой день ${data.days.length + 1}`,
+        title,
+        shortDate: formatted.short,
+        fullDate: formatted.full,
+        dateISO: dateValue,
+        image: './assets/day-1.jpg',
+        hero: './assets/mountain-pass.jpg',
+        quote: '«Новая дорога начинается с первой записи»',
+        body: ['Начните писать историю этого игрового дня...'],
+        note: ['Заметка на полях'],
+        footer: 'Продолжение следует.'
+      });
       persist();
       state.selectedDayId = nextId;
       state.mobileDetail = window.matchMedia('(max-width: 760px)').matches;
@@ -118,12 +183,15 @@
         <h3>Настройки записи</h3>
         <label><span>Название</span><input name="title" required maxlength="90" autocomplete="off" value="${escapeAttribute(day.title)}"></label>
         <label><span>Дата</span><input name="date" type="date" required value="${dateToInput()}"></label>
-        <div class="stage2-danger-zone"><button type="button" class="stage2-delete-day" data-delete-day>Удалить игровой день</button></div>
+        <div class="stage2-danger-zone">
+          <button type="button" class="stage2-delete-day" data-delete-day>Удалить игровой день</button>
+        </div>
         <div class="stage2-sheet-actions">
           <button type="button" class="stage2-sheet-button stage2-sheet-button--ghost" data-cancel>Отмена</button>
           <button type="submit" class="stage2-sheet-button stage2-sheet-button--primary">Сохранить</button>
         </div>
       </form>`);
+
     overlay.querySelector('form').addEventListener('submit', (event) => {
       event.preventDefault();
       const formData = new FormData(event.currentTarget);
@@ -139,8 +207,12 @@
       overlay.remove();
       render();
     });
+
     overlay.querySelector('[data-delete-day]').addEventListener('click', () => {
-      if (data.days.length <= 1) { alert('В журнале должен остаться хотя бы один игровой день.'); return; }
+      if (data.days.length <= 1) {
+        alert('В журнале должен остаться хотя бы один игровой день.');
+        return;
+      }
       if (!confirm(`Удалить «${day.title}»? Это действие нельзя отменить.`)) return;
       const index = data.days.findIndex((item) => Number(item.id) === Number(day.id));
       data.days.splice(index, 1);
@@ -154,12 +226,12 @@
     });
   }
 
-  function fileToDataUrl(file) {
-    return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(file); });
-  }
-
-  function loadImage(src) {
-    return new Promise((resolve, reject) => { const image = new Image(); image.onload = () => resolve(image); image.onerror = reject; image.src = src; });
+  function escapeAttribute(value) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('"', '&quot;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;');
   }
 
   async function compressImage(file) {
@@ -175,16 +247,48 @@
     return canvas.toDataURL('image/jpeg', 0.78);
   }
 
+  function fileToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = src;
+    });
+  }
+
   function chooseWallpaper() {
     const picker = document.createElement('input');
-    picker.type = 'file'; picker.accept = 'image/*'; picker.hidden = true; document.body.append(picker);
+    picker.type = 'file';
+    picker.accept = 'image/*';
+    picker.hidden = true;
+    document.body.append(picker);
     picker.addEventListener('change', async () => {
       const file = picker.files?.[0];
-      if (!file) { picker.remove(); return; }
-      try { currentDay().wallpaperDataUrl = await compressImage(file); persist(); render(); }
-      catch (error) { console.warn('Не удалось установить изображение', error); alert('Не удалось обработать изображение. Попробуйте другой файл.'); }
-      finally { picker.remove(); }
-    }, { once:true });
+      if (!file) {
+        picker.remove();
+        return;
+      }
+      try {
+        const wallpaper = await compressImage(file);
+        currentDay().wallpaperDataUrl = wallpaper;
+        persist();
+        render();
+      } catch (error) {
+        console.warn('Не удалось установить изображение', error);
+        alert('Не удалось обработать изображение. Попробуйте другой файл.');
+      } finally {
+        picker.remove();
+      }
+    }, { once: true });
     picker.click();
   }
 
@@ -192,68 +296,145 @@
     data.days.forEach((day) => {
       if (!day.wallpaperDataUrl) return;
       const row = document.querySelector(`[data-day="${day.id}"] .day-thumb`);
-      if (row) { row.style.backgroundImage = `url("${day.wallpaperDataUrl}")`; row.style.backgroundSize = 'cover'; row.style.backgroundPosition = 'center'; }
+      if (row) {
+        row.style.backgroundImage = `url("${day.wallpaperDataUrl}")`;
+        row.style.backgroundSize = 'cover';
+        row.style.backgroundPosition = 'center';
+      }
     });
     const hero = document.querySelector('.entry-hero-image');
     const day = currentDay();
-    if (hero && day.wallpaperDataUrl) { hero.style.backgroundImage = `url("${day.wallpaperDataUrl}")`; hero.style.backgroundSize = 'cover'; hero.style.backgroundPosition = 'center'; }
+    if (hero && day.wallpaperDataUrl) {
+      hero.style.backgroundImage = `url("${day.wallpaperDataUrl}")`;
+      hero.style.backgroundSize = 'cover';
+      hero.style.backgroundPosition = 'center';
+    }
   }
 
   function enhanceChronicle() {
     document.querySelector('.entry-actions')?.remove();
     document.querySelector('.entry-menu')?.remove();
     document.querySelector('.mobile-back')?.remove();
+
     const entry = document.querySelector('.entry-page');
-    if (!entry) { applyCustomWallpapers(); return; }
+    if (!entry) {
+      applyCustomWallpapers();
+      return;
+    }
+
     const header = entry.querySelector('.entry-header');
     if (state.mobileDetail && header && !entry.querySelector('.stage2-inline-back')) {
       const back = document.createElement('button');
-      back.type = 'button'; back.className = 'stage2-inline-back'; back.innerHTML = '<span aria-hidden="true">‹</span><span>Игровые дни</span>';
-      back.addEventListener('click', () => { state.mobileDetail = false; render(); });
+      back.type = 'button';
+      back.className = 'stage2-inline-back';
+      back.innerHTML = '<span aria-hidden="true">‹</span><span>Игровые дни</span>';
+      back.addEventListener('click', () => {
+        state.mobileDetail = false;
+        render();
+      });
       entry.insertBefore(back, header);
     }
+
     if (header && !header.querySelector('.stage2-edit-day')) {
-      const edit = document.createElement('button'); edit.type = 'button'; edit.className = 'stage2-edit-day'; edit.textContent = 'Править'; edit.addEventListener('click', openEditDayDialog); header.append(edit);
+      const edit = document.createElement('button');
+      edit.type = 'button';
+      edit.className = 'stage2-edit-day';
+      edit.textContent = 'Править';
+      edit.addEventListener('click', openEditDayDialog);
+      header.append(edit);
     }
+
     const title = entry.querySelector('.entry-header h2');
     if (title && !title.dataset.stage2Editable) {
-      title.dataset.stage2Editable = '1'; title.contentEditable = 'true'; title.spellcheck = true; title.classList.add('stage2-editable-title');
-      title.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); title.blur(); } });
-      title.addEventListener('input', () => { const value = title.textContent.replace(/\s+/g,' ').trimStart(); if (value) currentDay().title = value.slice(0,90); saveSoon(); });
+      title.dataset.stage2Editable = '1';
+      title.contentEditable = 'true';
+      title.spellcheck = true;
+      title.classList.add('stage2-editable-title');
+      title.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          title.blur();
+        }
+      });
+      title.addEventListener('input', () => {
+        const value = title.textContent.replace(/\s+/g, ' ').trimStart();
+        if (value) currentDay().title = value.slice(0, 90);
+        saveSoon();
+      });
     }
+
     const editor = entry.querySelector('.entry-copy');
     if (editor && !editor.dataset.stage2Editable) {
-      editor.dataset.stage2Editable = '1'; editor.contentEditable = 'true'; editor.spellcheck = true; editor.setAttribute('aria-label','Редактируемый текст игрового дня');
-      editor.addEventListener('input', () => { const paragraphs = [...editor.querySelectorAll('p')].map((node) => node.textContent.trim()).filter(Boolean); const plain = editor.innerText.trim(); currentDay().body = paragraphs.length ? paragraphs : (plain ? plain.split(/\n+/).filter(Boolean) : ['']); saveSoon(); });
+      editor.dataset.stage2Editable = '1';
+      const day = currentDay();
+      if (day.bodyHtml) editor.innerHTML = sanitizeRichHtml(day.bodyHtml);
+      editor.contentEditable = 'true';
+      editor.spellcheck = true;
+      editor.setAttribute('aria-label', 'Редактируемый текст игрового дня');
+      editor.addEventListener('input', () => storeEditorContent(editor));
+      editor.addEventListener('paste', () => requestAnimationFrame(() => {
+        editor.innerHTML = sanitizeRichHtml(editor.innerHTML);
+        storeEditorContent(editor);
+      }));
     }
+
     const note = entry.querySelector('.margin-note');
     if (note && !note.dataset.stage2Editable) {
-      note.dataset.stage2Editable = '1'; note.contentEditable = 'true'; note.spellcheck = true; note.setAttribute('aria-label','Редактируемая заметка на полях');
-      note.addEventListener('input', () => { const lines = [...note.querySelectorAll('p')].map((node) => node.textContent.trim()).filter(Boolean); if (lines.length) currentDay().note = lines; saveSoon(); });
+      note.dataset.stage2Editable = '1';
+      note.contentEditable = 'true';
+      note.spellcheck = true;
+      note.setAttribute('aria-label', 'Редактируемая заметка на полях');
+      note.addEventListener('input', () => {
+        const lines = [...note.querySelectorAll('p')].map((node) => node.textContent.trim()).filter(Boolean);
+        if (lines.length) currentDay().note = lines;
+        saveSoon();
+      });
     }
+
     const toolbar = entry.querySelector('.writing-toolbar');
     if (toolbar && !toolbar.dataset.stage2Toolbar) {
       toolbar.dataset.stage2Toolbar = '1';
-      [...toolbar.querySelectorAll('[data-tool]')].forEach((button) => { if (!functionalTools.has(button.dataset.tool)) button.remove(); });
-      [...toolbar.querySelectorAll('[data-tool]')].forEach((oldButton) => {
-        const button = oldButton.cloneNode(true); oldButton.replaceWith(button);
+      toolbar.innerHTML = toolbarMarkup();
+
+      toolbar.querySelectorAll('[data-stage2-tool]').forEach((button) => {
         button.addEventListener('click', () => {
-          const tool = button.dataset.tool; const editArea = entry.querySelector('.entry-copy'); toolbar.querySelectorAll('[data-tool]').forEach((item) => item.classList.toggle('is-active', item === button));
+          const tool = button.dataset.stage2Tool;
+          const editArea = entry.querySelector('.entry-copy');
+
           if (tool === 'plus' && editArea) {
-            const paragraph = document.createElement('p'); paragraph.innerHTML = '<br>'; editArea.append(paragraph); const range = document.createRange(); range.selectNodeContents(paragraph); range.collapse(false); const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range); editArea.focus(); saveSoon();
-          } else if (tool === 'undo') { document.execCommand('undo'); saveSoon(); }
-          else if (tool === 'comment') { const marginNote = entry.querySelector('.margin-note'); if (marginNote) { marginNote.hidden = !marginNote.hidden; if (!marginNote.hidden) marginNote.focus(); } }
-          else if (tool === 'image') { chooseWallpaper(); }
-          else if (editArea) { editArea.focus(); }
+            editArea.focus();
+            document.execCommand('insertParagraph', false, null);
+            storeEditorContent(editArea);
+          } else if (tool === 'bold') {
+            applyEditorCommand(editArea, 'bold');
+          } else if (tool === 'dash-list') {
+            applyEditorCommand(editArea, 'insertUnorderedList');
+          } else if (tool === 'number-list') {
+            applyEditorCommand(editArea, 'insertOrderedList');
+          } else if (tool === 'undo') {
+            applyEditorCommand(editArea, 'undo');
+          } else if (tool === 'comment') {
+            const marginNote = entry.querySelector('.margin-note');
+            if (marginNote) {
+              marginNote.hidden = !marginNote.hidden;
+              if (!marginNote.hidden) marginNote.focus();
+            }
+          } else if (tool === 'image') {
+            chooseWallpaper();
+          }
         });
       });
     }
+
     applyCustomWallpapers();
   }
 
   function enhanceList() {
     const addButton = document.querySelector('.add-day');
-    if (addButton && !addButton.dataset.stage2Bound) { addButton.dataset.stage2Bound = '1'; addButton.addEventListener('click', openNewDayDialog); }
+    if (addButton && !addButton.dataset.stage2Bound) {
+      addButton.dataset.stage2Bound = '1';
+      addButton.addEventListener('click', openNewDayDialog);
+    }
     applyCustomWallpapers();
   }
 
@@ -261,11 +442,15 @@
   function enhance() {
     if (queued) return;
     queued = true;
-    queueMicrotask(() => { queued = false; enhanceChronicle(); enhanceList(); });
+    queueMicrotask(() => {
+      queued = false;
+      enhanceChronicle();
+      enhanceList();
+    });
   }
 
   const observer = new MutationObserver(enhance);
-  observer.observe(document.querySelector('#app'), { childList:true, subtree:true });
+  observer.observe(document.querySelector('#app'), { childList: true, subtree: true });
   restore();
   render();
   enhance();
