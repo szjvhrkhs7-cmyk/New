@@ -1,0 +1,97 @@
+/* Stage 3: first functional character cards */
+.stage3-edit-character {
+  position: absolute;
+  z-index: 8;
+  top: 46px;
+  right: 42px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(100,68,39,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.14);
+  color: #624a37;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28);
+  cursor: pointer;
+}
+
+.stage3-editable-character-note,
+.stage3-editable-character-hook { outline: none; }
+
+.stage3-editable-character-note:focus,
+.stage3-editable-character-hook:focus {
+  border-radius: 7px;
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 0 0 5px rgba(255,255,255,.035);
+}
+
+.stage3-character-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(16,9,6,.58);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.stage3-character-sheet {
+  width: min(470px,100%);
+  max-height: min(760px,92dvh);
+  overflow-y: auto;
+  padding: 22px;
+  border: 1px solid rgba(202,169,111,.3);
+  border-radius: 20px;
+  background: radial-gradient(circle at 18% 8%,rgba(255,255,255,.3),transparent 26%), linear-gradient(145deg,#ead8b3,#d7b986);
+  color: var(--ink,#34271d);
+  box-shadow: 0 26px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.36);
+}
+.stage3-character-sheet h3 { margin:0 0 18px; font-size:27px; }
+.stage3-character-sheet label { display:grid; gap:6px; margin-bottom:13px; color:#5e4836; font-size:14px; }
+.stage3-character-fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.stage3-character-sheet input,
+.stage3-character-sheet textarea {
+  width:100%;
+  min-height:44px;
+  padding:9px 12px;
+  border:1px solid rgba(100,68,39,.28);
+  border-radius:11px;
+  background:rgba(255,255,255,.32);
+  color:#34271d;
+  font:inherit;
+  outline:none;
+  resize:vertical;
+}
+.stage3-character-sheet input:focus,
+.stage3-character-sheet textarea:focus {
+  border-color:rgba(112,39,30,.5);
+  box-shadow:0 0 0 3px rgba(112,39,30,.08);
+}
+.stage3-sheet-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; }
+.stage3-sheet-button { min-height:42px; padding:0 16px; border-radius:999px; font:inherit; cursor:pointer; }
+.stage3-sheet-button--ghost { border:1px solid rgba(100,68,39,.22); background:rgba(255,255,255,.18); color:#49372a; }
+.stage3-sheet-button--primary { border:1px solid rgba(45,72,48,.45); background:linear-gradient(#526c55,#314536); color:#f0dbb1; }
+.stage3-danger-zone { margin-top:18px; padding-top:12px; border-top:1px solid rgba(106,69,38,.16); }
+.stage3-delete-character { min-height:38px; padding:0; border:0; background:transparent; color:#8d3028; cursor:pointer; font:inherit; }
+
+@media (max-width:760px) {
+  .stage3-edit-character {
+    top:22px;
+    right:12px;
+    min-height:32px;
+    padding:0 10px;
+    font-size:12px;
+  }
+  .stage3-character-overlay {
+    align-items:end;
+    padding:8px 3px calc(8px + env(safe-area-inset-bottom,0px));
+  }
+  .stage3-character-sheet {
+    width:100%;
+    max-height:88dvh;
+    padding:19px 14px 15px;
+    border-radius:22px 22px 11px 11px;
+  }
+  .stage3-character-fields { grid-template-columns:1fr; gap:0; }
+}
