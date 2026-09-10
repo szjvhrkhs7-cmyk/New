@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b7aa91"/><stop offset="1" stop-color="#ddd0ae"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#88755a"/><stop offset="1" stop-color="#554737"/></linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/><feColorMatrix in="n" type="saturate" values="0" result="g"/><feComponentTransfer in="g"><feFuncA type="table" tableValues="0 .11"/></feComponentTransfer></filter>
+    <g id="mountains"><path d="M0 71 19 48 34 58 52 33 70 58 83 43 100 68V100H0Z" fill="#696052"/><path d="M0 80 24 60 43 71 58 48 78 69 100 58V100H0Z" fill="#4c463d" opacity=".8"/><path d="M14 100V68l7-8 5 9v31M83 100V72l7-10 5 12v26" stroke="#2f2c28" stroke-width="2"/></g>
+    <g id="village"><rect x="13" y="58" width="25" height="30" fill="#5a5145"/><path d="m9 59 17-16 18 16Z" fill="#433c34"/><rect x="48" y="49" width="34" height="39" fill="#6b5d4d"/><path d="m43 50 22-18 23 18Z" fill="#493e34"/><rect x="58" y="62" width="8" height="12" fill="#d4c39f" opacity=".6"/><path d="M0 88h100v12H0Z" fill="#594b3a"/></g>
+    <g id="tower"><path d="M36 92V35h29v57Z" fill="#5b5347"/><path d="m32 36 18-20 19 20Z" fill="#3f3932"/><rect x="45" y="47" width="8" height="14" fill="#d6c6a2" opacity=".5"/><path d="M0 83 23 64 38 73 55 57 77 75 100 61V100H0Z" fill="#665a49"/></g>
+    <g id="forest"><path d="M0 82 100 68v32H0Z" fill="#4d463a"/><g fill="#4a4539"><path d="m15 22-12 26h8L0 67h30L19 48h9Z"/><path d="m43 12-14 31h9L25 68h34L48 43h10Z"/><path d="m76 20-13 28h9L58 76h37L82 48h9Z"/></g></g>
+    <g id="ruin"><path d="M12 88V43h20v45M68 88V27h20v61M30 58h40v30H30Z" fill="#655a49"/><path d="M7 45 21 34l14 11M64 29 78 16l14 13" fill="none" stroke="#433d34" stroke-width="3"/><path d="M0 88h100v12H0Z" fill="#514638"/></g>
+    <g id="mist"><path d="M0 76c16-10 26 8 43-2 16-10 26 5 57-4v30H0Z" fill="#6c6252"/><path d="M7 55c18-7 27 4 40-1 15-6 27 3 47-3" fill="none" stroke="#ede0c0" stroke-width="5" opacity=".55"/><circle cx="51" cy="42" r="18" fill="none" stroke="#4f473b" stroke-width="3"/><path d="M51 17v50M26 42h50" stroke="#4f473b" stroke-width="2"/></g>
+    <g id="harbor"><path d="M0 76h100v24H0Z" fill="#6e6558"/><path d="M8 73h26V44h18v29h14V37h18v36h9" fill="#554d43"/><path d="M23 74V28l14 16H23M78 74V21l13 17H78" fill="none" stroke="#3f3a33" stroke-width="3"/><path d="M4 87c18-5 28 5 44 0 17-5 30 5 48 0" fill="none" stroke="#d6c9ab" stroke-width="2" opacity=".5"/></g>
+  </defs>
+  <g transform="translate(0 0)"><rect width="100" height="100" fill="url(#sky)"/><use href="#mountains"/><rect width="100" height="100" filter="url(#grain)" opacity=".7"/></g>
+  <g transform="translate(100 0)"><rect width="100" height="100" fill="url(#sky)"/><use href="#village"/><rect width="100" height="100" filter="url(#grain)" opacity=".7"/></g>
+  <g transform="translate(200 0)"><rect width="100" height="100" fill="url(#sky)"/><use href="#tower"/><rect width="100" height="100" filter="url(#grain)" opacity=".7"/></g>
+  <g transform="translate(300 0)"><rect width="100" height="100" fill="#aea38d"/><use href="#forest"/><rect width="100" height="100" filter="url(#grain)" opacity=".7"/></g>
+  <g transform="translate(0 100)"><rect width="100" height="100" fill="#bdb096"/><use href="#ruin"/><rect width="100" height="100" filter="url(#grain)" opacity=".7"/></g>
+  <g transform="translate(100 100)"><rect width="100" height="100" fill="#c6b99f"/><use href="#mist"/><rect width="100" height="100" filter="url(#grain)" opacity=".7"/></g>
+  <g transform="translate(200 100)"><rect width="100" height="100" fill="url(#sky)"/><use href="#mountains"/><path d="M42 72V38h19v34M39 39l13-14 13 14" fill="#453e35"/><rect width="100" height="100" filter="url(#grain)" opacity=".7"/></g>
+  <g transform="translate(300 100)"><rect width="100" height="100" fill="#b6aa92"/><use href="#harbor"/><rect width="100" height="100" filter="url(#grain)" opacity=".7"/></g>
+</svg>
