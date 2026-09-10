@@ -34,9 +34,7 @@
 }
 .stage2-edit-day:hover { background: rgba(255,255,255,.24); }
 
-.stage2-inline-back {
-  display: none;
-}
+.stage2-inline-back { display: none; }
 
 .stage2-new-day-overlay {
   position: fixed;
@@ -55,9 +53,7 @@
   padding: 22px;
   border: 1px solid rgba(202,169,111,.3);
   border-radius: 20px;
-  background:
-    radial-gradient(circle at 18% 8%,rgba(255,255,255,.28),transparent 26%),
-    linear-gradient(145deg,#ead8b3,#d9bc8c);
+  background: radial-gradient(circle at 18% 8%,rgba(255,255,255,.28),transparent 26%), linear-gradient(145deg,#ead8b3,#d9bc8c);
   box-shadow: 0 26px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.35);
   color: var(--ink,#34271d);
 }
@@ -87,7 +83,7 @@
 
   .scene {
     width: 100%;
-    padding: 31px 0 18px !important;
+    padding: 31px 0 8px !important;
   }
 
   .book-shell {
@@ -103,7 +99,21 @@
 
   .book-spread {
     width: 100%;
+    min-height: calc(100svh - 40px);
     border-radius: 7px !important;
+  }
+
+  .book-spread > section,
+  .book-spread > article {
+    min-height: calc(100svh - 40px) !important;
+  }
+
+  @supports (height: 100dvh) {
+    .book-spread,
+    .book-spread > section,
+    .book-spread > article {
+      min-height: calc(100dvh - 40px) !important;
+    }
   }
 
   .bookmark-tabs {
@@ -121,21 +131,13 @@
   .book-spread > article {
     padding-left: 7px !important;
     padding-right: 7px !important;
+    padding-bottom: 14px !important;
   }
 
-  .campaign-heading {
-    padding-left: 4px;
-    padding-right: 4px;
-  }
+  .campaign-heading { padding-left: 4px; padding-right: 4px; }
+  .day-row { padding-left: 5px !important; padding-right: 5px !important; }
 
-  .day-row {
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-  }
-
-  .book-shell.show-detail .book-spread > :nth-child(2) {
-    padding-top: 28px !important;
-  }
+  .book-shell.show-detail .book-spread > :nth-child(2) { padding-top: 28px !important; }
 
   .stage2-inline-back {
     position: relative;
@@ -144,8 +146,8 @@
     align-items:center;
     gap:4px;
     min-height:32px;
-    margin:0 0 13px 1px;
-    padding:0 9px 0 7px;
+    margin:2px 0 12px 4px;
+    padding:0 10px 0 9px;
     border:1px solid rgba(105,72,40,.18);
     border-radius:999px;
     background:rgba(255,255,255,.14);
@@ -153,38 +155,31 @@
     color:#5b4432;
     font:inherit;
     font-size:13px;
-    cursor: pointer;
-    overflow: visible;
+    cursor:pointer;
+    overflow:visible;
   }
   .stage2-inline-back > span:first-child {
-    display: inline-block;
+    display:inline-block;
+    width:12px;
     font-size:21px;
     line-height:1;
-    transform: translateY(-1px);
+    transform:translateY(-1px);
   }
-  .stage2-inline-back > span:last-child { line-height: 1; }
+  .stage2-inline-back > span:last-child { line-height:1; }
 
   .entry-header {
     position: relative;
-    display: grid !important;
-    grid-template-columns: minmax(0,1fr) auto;
-    gap: 6px 8px !important;
-    align-items: start !important;
-    margin-bottom: 9px !important;
-    padding-left: 3px;
-    padding-right: 3px;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:6px 8px !important;
+    align-items:start !important;
+    margin-bottom:9px !important;
+    padding-left:3px;
+    padding-right:3px;
   }
 
-  .stage2-edit-day {
-    grid-column: 2;
-    grid-row: 1;
-    min-height: 31px;
-    padding: 0 9px;
-    font-size: 12px;
-  }
-
-  .entry-title-block { grid-column: 1 / -1; grid-row: 1 / span 2; padding-right: 64px; }
-
+  .stage2-edit-day { grid-column:2; grid-row:1; min-height:31px; padding:0 9px; font-size:12px; }
+  .entry-title-block { grid-column:1 / -1; grid-row:1 / span 2; padding-right:64px; }
   .entry-ribbon { right:14px !important; top:0 !important; }
   .entry-hero { height:162px !important; margin-bottom:11px !important; }
   .story-toolbar-wrap { margin-left:0 !important; margin-right:0 !important; }
@@ -210,10 +205,10 @@
 }
 
 @media (max-width:410px) {
-  .scene { padding-left: 0 !important; padding-right: 0 !important; }
-  .book-shell { width: calc(100vw - 2px) !important; margin: 0 1px !important; }
+  .scene { padding-left:0 !important; padding-right:0 !important; }
+  .book-shell { width:calc(100vw - 2px) !important; margin:0 1px !important; }
   .book-spread > section,
   .book-spread > article { padding-left:6px !important; padding-right:6px !important; }
-  .bookmark-tab { font-size: 12.5px !important; }
+  .bookmark-tab { font-size:12.5px !important; }
   .writing-toolbar button { width:32px !important; height:32px !important; }
 }
