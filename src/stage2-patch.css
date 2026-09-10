@@ -1,4 +1,4 @@
-/* Stage 2 patch: editable journal + compact mobile layout */
+/* Stage 2: editable journal, compact iPhone layout, record management */
 .entry-actions,
 .entry-menu,
 .mobile-back {
@@ -6,16 +6,33 @@
 }
 
 .stage2-editable-title,
-.entry-copy[contenteditable="true"] {
+.entry-copy[contenteditable="true"],
+.margin-note[contenteditable="true"] {
   outline: none;
 }
 
 .stage2-editable-title:focus,
-.entry-copy[contenteditable="true"]:focus {
-  background: rgba(255,255,255,.07);
+.entry-copy[contenteditable="true"]:focus,
+.margin-note[contenteditable="true"]:focus {
+  background: rgba(255,255,255,.065);
   border-radius: 7px;
-  box-shadow: 0 0 0 6px rgba(255,255,255,.035);
+  box-shadow: 0 0 0 5px rgba(255,255,255,.032);
 }
+
+.stage2-edit-day {
+  align-self: flex-start;
+  min-height: 34px;
+  margin-left: auto;
+  padding: 0 11px;
+  border: 1px solid rgba(100,68,39,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.13);
+  color: #664d38;
+  cursor: pointer;
+  font-size: 13px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.26);
+}
+.stage2-edit-day:hover { background: rgba(255,255,255,.24); }
 
 .stage2-inline-back {
   display: none;
@@ -38,7 +55,9 @@
   padding: 22px;
   border: 1px solid rgba(202,169,111,.3);
   border-radius: 20px;
-  background: radial-gradient(circle at 18% 8%,rgba(255,255,255,.28),transparent 26%),linear-gradient(145deg,#ead8b3,#d9bc8c);
+  background:
+    radial-gradient(circle at 18% 8%,rgba(255,255,255,.28),transparent 26%),
+    linear-gradient(145deg,#ead8b3,#d9bc8c);
   box-shadow: 0 26px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.35);
   color: var(--ink,#34271d);
 }
@@ -51,48 +70,150 @@
 .stage2-sheet-button { min-height:42px; padding:0 16px; border-radius:999px; font:inherit; cursor:pointer; }
 .stage2-sheet-button--ghost { border:1px solid rgba(100,68,39,.22); background:rgba(255,255,255,.18); color:#49372a; }
 .stage2-sheet-button--primary { border:1px solid rgba(80,25,20,.45); background:linear-gradient(#7b3027,#59201a); color:#f0dbb1; }
+.stage2-danger-zone { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(106,69,38,.16); }
+.stage2-delete-day { min-height: 40px; padding: 0; border: 0; background: transparent; color: #8d3028; cursor: pointer; font: inherit; }
+.stage2-delete-day:hover { text-decoration: underline; }
+
+.book-spread > section,
+.book-spread > article {
+  box-shadow:
+    inset 0 0 24px rgba(83,54,28,.06),
+    inset 8px 0 14px -14px rgba(88,56,29,.34),
+    inset -8px 0 14px -14px rgba(88,56,29,.34) !important;
+}
 
 @media (max-width:760px) {
-  .scene { padding-left:3px !important; padding-right:3px !important; }
-  .book-shell { width:min(100%,446px) !important; }
-  .book-cover { inset:-5px -3px -7px !important; }
+  html, body { width: 100%; overflow-x: hidden; }
+
+  .scene {
+    width: 100%;
+    padding: 31px 0 18px !important;
+  }
+
+  .book-shell {
+    width: calc(100vw - 4px) !important;
+    max-width: none !important;
+    margin: 0 2px !important;
+  }
+
+  .book-cover {
+    inset: -4px -1px -7px !important;
+    border-radius: 11px !important;
+  }
+
+  .book-spread {
+    width: 100%;
+    border-radius: 7px !important;
+  }
+
+  .bookmark-tabs {
+    left: 4px !important;
+    right: 4px !important;
+    gap: 3px !important;
+  }
+
+  .bookmark-tab {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
   .book-spread > section,
-  .book-spread > article { padding-left:10px !important; padding-right:10px !important; }
-  .book-shell.show-detail .book-spread > :nth-child(2) { padding-top:16px !important; }
+  .book-spread > article {
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+  }
+
+  .campaign-heading {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .day-row {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
+  .book-shell.show-detail .book-spread > :nth-child(2) {
+    padding-top: 28px !important;
+  }
 
   .stage2-inline-back {
+    position: relative;
+    z-index: 7;
     display:inline-flex;
     align-items:center;
-    gap:5px;
-    min-height:34px;
-    margin:0 0 12px;
-    padding:0 10px 0 8px;
-    border:1px solid rgba(105,72,40,.2);
+    gap:4px;
+    min-height:32px;
+    margin:0 0 13px 1px;
+    padding:0 9px 0 7px;
+    border:1px solid rgba(105,72,40,.18);
     border-radius:999px;
-    background:rgba(255,255,255,.17);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.28);
+    background:rgba(255,255,255,.14);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
     color:#5b4432;
     font:inherit;
     font-size:13px;
+    cursor: pointer;
+    overflow: visible;
   }
-  .stage2-inline-back > span { font-size:22px; line-height:1; margin-top:-2px; }
+  .stage2-inline-back > span:first-child {
+    display: inline-block;
+    font-size:21px;
+    line-height:1;
+    transform: translateY(-1px);
+  }
+  .stage2-inline-back > span:last-child { line-height: 1; }
 
-  .entry-header { margin-bottom:10px !important; }
-  .entry-ribbon { right:20px !important; top:0 !important; }
-  .entry-hero { height:166px !important; margin-bottom:12px !important; }
+  .entry-header {
+    position: relative;
+    display: grid !important;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 6px 8px !important;
+    align-items: start !important;
+    margin-bottom: 9px !important;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  .stage2-edit-day {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 31px;
+    padding: 0 9px;
+    font-size: 12px;
+  }
+
+  .entry-title-block { grid-column: 1 / -1; grid-row: 1 / span 2; padding-right: 64px; }
+
+  .entry-ribbon { right:14px !important; top:0 !important; }
+  .entry-hero { height:162px !important; margin-bottom:11px !important; }
   .story-toolbar-wrap { margin-left:0 !important; margin-right:0 !important; }
-  .writing-toolbar { min-height:52px !important; padding:6px 8px !important; gap:5px !important; }
-  .writing-toolbar button { width:34px !important; height:34px !important; }
-  .entry-copy p { font-size:16px !important; line-height:1.38 !important; margin-bottom:12px !important; }
-  .margin-note { width:min(94%,290px) !important; }
+  .writing-toolbar { min-height:50px !important; padding:5px 6px !important; gap:4px !important; }
+  .writing-toolbar button { width:33px !important; height:33px !important; }
+  .entry-copy p { font-size:16px !important; line-height:1.36 !important; margin-bottom:11px !important; }
+  .margin-note { width:min(96%,300px) !important; }
 
   .book-spread > section::before,
-  .book-spread > article::before { inset:7px !important; }
+  .book-spread > article::before { inset:5px !important; }
   .book-spread > section::after,
   .book-spread > article::after {
-    background: radial-gradient(circle at 0 8%,rgba(99,63,31,.12),transparent 15%),radial-gradient(circle at 100% 24%,rgba(99,63,31,.1),transparent 13%),radial-gradient(circle at 4% 94%,rgba(99,63,31,.11),transparent 14%),linear-gradient(90deg,rgba(75,48,25,.12),transparent 2.5%,transparent 97.5%,rgba(75,48,25,.12)),linear-gradient(0deg,rgba(75,48,25,.08),transparent 3%,transparent 97%,rgba(75,48,25,.08)) !important;
+    background:
+      radial-gradient(circle at 0 8%,rgba(99,63,31,.14),transparent 14%),
+      radial-gradient(circle at 100% 24%,rgba(99,63,31,.11),transparent 12%),
+      radial-gradient(circle at 4% 94%,rgba(99,63,31,.13),transparent 13%),
+      linear-gradient(90deg,rgba(75,48,25,.14),transparent 2%,transparent 98%,rgba(75,48,25,.14)),
+      linear-gradient(0deg,rgba(75,48,25,.09),transparent 2.5%,transparent 97.5%,rgba(75,48,25,.09)) !important;
   }
 
-  .stage2-new-day-overlay { align-items:end; padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px)); }
-  .stage2-new-day-sheet { width:100%; padding:19px 15px 15px; border-radius:22px 22px 14px 14px; }
+  .stage2-new-day-overlay { align-items:end; padding:8px 3px calc(8px + env(safe-area-inset-bottom,0px)); }
+  .stage2-new-day-sheet { width:100%; padding:19px 14px 15px; border-radius:22px 22px 11px 11px; }
+}
+
+@media (max-width:410px) {
+  .scene { padding-left: 0 !important; padding-right: 0 !important; }
+  .book-shell { width: calc(100vw - 2px) !important; margin: 0 1px !important; }
+  .book-spread > section,
+  .book-spread > article { padding-left:6px !important; padding-right:6px !important; }
+  .bookmark-tab { font-size: 12.5px !important; }
+  .writing-toolbar button { width:32px !important; height:32px !important; }
 }
