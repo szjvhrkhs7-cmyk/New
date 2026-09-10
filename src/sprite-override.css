@@ -1,0 +1,6 @@
+.sprite-image {
+  background-image: url('../assets/sprite.svg');
+  background-size: 400% 200%;
+  background-position: var(--sprite-x) var(--sprite-y);
+  background-repeat: no-repeat;
+}
