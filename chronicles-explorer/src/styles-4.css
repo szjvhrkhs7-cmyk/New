@@ -1,0 +1,173 @@
+
+  .day-label { font-size: 16px; }
+  .campaign-meta, .entry-date { font-size: 14px; }
+
+  .day-list { gap: 6px; }
+  .day-row {
+    grid-template-columns: 64px 1fr 16px;
+    gap: 10px;
+    min-height: 68px;
+    padding: 7px;
+  }
+  .day-thumb { width: 64px; height: 48px; }
+  .day-copy strong { font-size: 18px; white-space: normal; }
+  .day-copy small { font-size: 12px; }
+  .add-day { min-height: 40px; font-size: 14px; }
+
+  .entry-ribbon {
+    right: 32px;
+    width: 24px;
+    height: 62px;
+  }
+  .entry-ribbon::after {
+    border-left-width: 12px;
+    border-right-width: 12px;
+    border-bottom-width: 12px;
+  }
+  .entry-header {
+    align-items: start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .entry-actions {
+    gap: 0;
+    padding-right: 0;
+  }
+  .icon-button { width: 30px; height: 30px; }
+
+  .entry-hero {
+    height: 180px;
+    margin-bottom: 14px;
+  }
+  .entry-hero figcaption {
+    width: min(54%, 170px);
+    top: 12px;
+    right: 12px;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .section-title-row {
+    margin-bottom: 8px;
+  }
+  .section-title { font-size: 12px; }
+  .section-subtitle { display: none; }
+
+  .story-toolbar-wrap {
+    position: sticky;
+    bottom: 14px;
+    z-index: 12;
+    margin: 14px -2px 12px;
+  }
+  .writing-toolbar {
+    min-height: 56px;
+    padding: 7px 9px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 8px 24px rgba(0,0,0,.32);
+  }
+  .writing-toolbar button {
+    width: 36px;
+    height: 36px;
+  }
+  .writing-toolbar .icon { width: 20px; height: 20px; }
+
+  .entry-body {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-top: 0;
+  }
+  .entry-copy p {
+    margin-bottom: 14px;
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  .margin-note {
+    width: min(86%, 270px);
+    min-height: 0;
+    margin-left: auto;
+    padding: 16px 14px 12px;
+  }
+  .margin-note p { font-size: 15px; }
+  .ink-sketch {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    height: 112px;
+    margin-top: 18px;
+  }
+  .ink-sketch svg { inset: 32px 0 0; }
+  .ink-sketch p {
+    font-size: 15px;
+    white-space: normal;
+    max-width: 82%;
+    line-height: 1.2;
+  }
+
+  .mobile-back {
+    position: fixed;
+    z-index: 30;
+    top: 10px;
+    left: 12px;
+    height: 36px;
+    display: none;
+    align-items: center;
+    gap: 2px;
+    border: 1px solid rgba(200,166,108,.42);
+    border-radius: 18px;
+    padding: 0 10px 0 7px;
+    background: rgba(38,22,15,.92);
+    color: #ddc49b;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+  .mobile-back.is-visible { display: flex; }
+  .mobile-back .icon { width: 17px; height: 17px; }
+  .mobile-back svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.7; }
+  .mobile-back span { font-size: 12px; }
+
+  .placeholder-header { margin-bottom: 14px; padding-bottom: 12px; }
+  .search-strip { min-height: 42px; margin-bottom: 10px; }
+  .character-list { gap: 6px; }
+  .character-row {
+    min-height: 72px;
+    grid-template-columns: 54px 1fr 16px;
+    gap: 11px;
+    padding: 7px;
+  }
+  .character-thumb { width: 54px; height: 52px; }
+  .character-row strong { font-size: 18px; }
+  .character-row small { font-size: 12px; }
+  .character-card, .atlas-card { padding-top: 24px !important; }
+  .portrait-frame { height: 198px; }
+  .character-seal {
+    top: 166px;
+    right: 28px;
+    width: 54px;
+    height: 54px;
+    font-size: 22px;
+  }
+  .atlas-grid { gap: 8px; }
+  .atlas-tile { min-height: 130px; }
+  .atlas-hero { height: 192px; }
+  .tag-row span { font-size: 12px; }
+}
+
+@media (max-width: 410px) {
+  .scene { padding-left: 6px; padding-right: 6px; }
+  .book-spread > section, .book-spread > article { padding-left: 16px; padding-right: 16px; }
+  .bookmark-tab { font-size: 13px; }
+  .day-row { grid-template-columns: 58px 1fr 14px; gap: 9px; }
+  .day-thumb { width: 58px; height: 44px; }
+  .day-copy strong { font-size: 17px; }
+  .mountain-mark { display: none; }
+  .campaign-heading { justify-content: flex-start; }
+  .entry-hero { height: 165px; }
+  .entry-hero figcaption { width: 150px; font-size: 12px; }
+  .atlas-grid { grid-template-columns: 1fr; }
+  .atlas-tile { min-height: 118px; }
+  .margin-note { width: 92%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
